@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems
 
+import com.pedropathing.math.MathFunctions
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.PwmControl.PwmRange
 import com.qualcomm.robotcore.hardware.ServoImplEx
@@ -12,15 +13,6 @@ object Glider {
     var LOWER_LIMIT = 0.0   //~53 degrees
 
     var FAR_DEGREE = 40.0
-    private val distanceAngleTable = listOf(
-        0.5 to 53.0,
-        1.0 to 53.0,
-        1.5 to 53.0,
-        2.0 to 53.0,
-        2.5 to 53.0,
-        3.0 to 33.0
-
-    )
 
     private lateinit var servoGlider: ServoImplEx
 
@@ -49,25 +41,8 @@ object Glider {
         return servoGlider.position
     }
 
-    fun autoAim(distance: Double) {
-        val clampedDistance = distance.coerceIn(
-            distanceAngleTable.first().first,
-            distanceAngleTable.last().first
-        )
-
-        val lower = distanceAngleTable.lastOrNull { it.first <= clampedDistance } ?: distanceAngleTable.first()
-        val upper = distanceAngleTable.firstOrNull { it.first >= clampedDistance } ?: distanceAngleTable.last()
-
-        val angle = if (lower == upper) {
-            lower.second
-        } else {
-            val (d1, a1) = lower
-            val (d2, a2) = upper
-            a1 + (clampedDistance - d1) * (a2 - a1) / (d2 - d1)
-        }
-
-        val adjustedAngle = angle + offset
-
-        setPositionDeg(adjustedAngle)
+    fun glide(distance:Double):Double
+    {
+        return MathFunctions.clamp(0.0, 0.0, 0.0)
     }
 }

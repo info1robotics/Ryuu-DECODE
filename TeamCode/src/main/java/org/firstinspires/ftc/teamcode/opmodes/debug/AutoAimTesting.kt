@@ -38,8 +38,8 @@ class AutoAimTesting : LinearOpMode() {
             }
             else
             {
-                Glider.autoAim(distance)
-                Shooter.setVelocityForDistance(distance)
+                Glider.glide(distance)
+                Shooter.shoot(distance)
             }
             log.add("if the tuning variable is true then you manually change the rpm and degrees" +
                     "use this when editing the tables")

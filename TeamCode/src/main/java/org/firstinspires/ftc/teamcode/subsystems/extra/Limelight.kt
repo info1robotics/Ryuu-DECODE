@@ -52,6 +52,10 @@ object Limelight {
         val result = limelight.latestResult ?: return null
         return if (result.isValid) result.ty else null
     }
+    fun getTa():Double?{
+        val result = limelight.latestResult ?: return null
+        return if(result.isValid) result.ta else null
+    }
 
     fun isCentered(toleranceDeg: Double = 2.0): Boolean {
         val tx = getTx() ?: return false
@@ -64,16 +68,10 @@ object Limelight {
     fun isAlliance() = getAprilTagId() == allianceTag
 
     fun getDistanceToAprilTag(
-        tagHeightM: Double,      // height of the tag center from the ground in meters
-        cameraHeightM: Double,   // height of the camera from the ground in meters
-        cameraPitchDeg: Double = 0.0  // camera tilt in degrees (positive = pointing down)
+        ta:Double
     ): Double? {
-        val tyDeg = Limelight.getTy() ?: return null
-
-        val angleTotalRad = Math.toRadians(cameraPitchDeg + tyDeg)
-        if (angleTotalRad == 0.0) return null
-
-        val distance = (tagHeightM - cameraHeightM) / kotlin.math.tan(angleTotalRad)
-        return if (distance.isFinite()) kotlin.math.abs(distance) else null
+        val scale = 0.0//edit based on the graph
+        var distance = scale/ta
+        return distance
     }
 }

@@ -65,30 +65,6 @@ object Turret {
     private var lastTime = System.currentTimeMillis()
 
     fun lock() {
-        val tx = Limelight.getTx() ?: return // nothing detected -> do nothing
-
-        // Tuning constant — adjust based on behavior
-        val kP = 3.0 // degrees of turret movement per 1° of limelight error
-
-        // Convert Limelight horizontal error → turret movement (in degrees)
-        val turretDeltaDeg = tx * kP
-
-        if (turretDeltaDeg.absoluteValue <= deadZoneDeg) {
-            hold()
-            return
-        }
-
-        val currentPos = getCurrentPosition()
-        val currentDeg = currentPos / TICKS_PER_DEG
-        val targetDeg = currentDeg + turretDeltaDeg
-
-        val targetTicks = (targetDeg * TICKS_PER_DEG).toInt()
-            .coerceIn((LEFT_LIMIT * TICKS_PER_DEG).toInt(), (RIGHT_LIMIT * TICKS_PER_DEG).toInt())
-
-        motorTurret.targetPosition = targetTicks
-        motorTurret.mode = DcMotor.RunMode.RUN_TO_POSITION
-        motorTurret.power = 0.5 // adjust for speed
     }
 
-    const val TICKS_PER_DEGREE = 12  // <-- update this for YOUR turret
 }

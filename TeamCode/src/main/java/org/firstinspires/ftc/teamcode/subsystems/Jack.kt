@@ -4,27 +4,25 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.PwmControl.PwmRange
 import com.qualcomm.robotcore.hardware.ServoImplEx
 
-object Clamp {
+object Jack {
 
     var offset = 0.0
     var HIGHER_LIMIT = 1.0
     var LOWER_LIMIT = 0.0
-    var FAR_POSITION = 0.0
-    var CLOSE_POSITION = 0.0
-    private lateinit var servoClamp: ServoImplEx
+    private lateinit var servoJack: ServoImplEx
 
     fun init(hardwareMap: HardwareMap) {
-        servoClamp = hardwareMap.get(ServoImplEx::class.java, "servoClamp")
-        servoClamp.pwmRange = PwmRange(500.0, 2500.0)
-        servoClamp.position = FAR_POSITION
+        servoJack = hardwareMap.get(ServoImplEx::class.java, "servoJack")
+        servoJack.pwmRange = PwmRange(500.0, 2500.0)
+        servoJack.position = 0.0
     }
 
     fun setPosition(position: Double) {
-        servoClamp.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
+        servoJack.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
     }
 
     fun getPosition(): Double {
-        return servoClamp.position
+        return servoJack.position
     }
 
 }

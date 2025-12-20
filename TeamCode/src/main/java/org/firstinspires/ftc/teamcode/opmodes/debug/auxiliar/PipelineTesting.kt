@@ -33,7 +33,7 @@ class PipelineTesting : LinearOpMode() {
                 AprilTags.RED -> log.add("Red alliance basket")
                 else -> log.add("No id detected")
             }
-            val dist = Limelight.getDistanceToAprilTag(.75, 0.5, 0.0)
+            val dist = Limelight.getTa()?.let { Limelight.getDistanceToAprilTag(it) }
             log.add(Limelight.getTx().toString())
             log.add(Limelight.getTy().toString())
             log.add(dist.toString())

@@ -15,18 +15,17 @@ object Controller {
     fun init(hardwareMap: HardwareMap) {
         Drivetrain.init(hardwareMap)
         Intake.init(hardwareMap)
-        Clamp.init(hardwareMap)
-        Indexer.init(hardwareMap)
         Shooter.init(hardwareMap)
         Turret.init(hardwareMap)
         Glider.init(hardwareMap)
         Limelight.init(hardwareMap)
+        Jack.init(hardwareMap)
         state = State.INIT
     }
 
     fun setInit()
     {
-        Indexer.setPosition(Indexer.FIRST_POSITION)
+
         Glider.setPositionDeg(Glider.FAR_DEGREE)
         state = State.INIT
     }

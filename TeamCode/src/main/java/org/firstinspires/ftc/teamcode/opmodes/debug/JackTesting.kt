@@ -4,15 +4,14 @@ import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.common.Log
-import org.firstinspires.ftc.teamcode.subsystems.Clamp
+import org.firstinspires.ftc.teamcode.subsystems.Jack
 import org.firstinspires.ftc.teamcode.subsystems.Shooter
 import org.firstinspires.ftc.teamcode.subsystems.Turret
 import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
 
 @TeleOp
 @Config
-
-class ClampTesting : LinearOpMode() {
+class JackTesting : LinearOpMode() {
     companion object {
         @JvmField
         var position = 0.0
@@ -20,14 +19,14 @@ class ClampTesting : LinearOpMode() {
     }
     lateinit var log: Log
     override fun runOpMode() {
-        Clamp.init(hardwareMap)
+        Jack.init(hardwareMap)
         log = Log(this.telemetry)
         waitForStart()
 
         while (opModeIsActive()) {
-            Clamp.setPosition(position)
+            Jack.setPosition(position)
 
-            log.add("Clamp Position",Clamp.getPosition())
+            log.add("Jack Position",Jack.getPosition())
             log.tick()
         }
     }

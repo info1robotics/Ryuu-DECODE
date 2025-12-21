@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.PwmControl.PwmRange
 import com.qualcomm.robotcore.hardware.ServoImplEx
 
-object Glider {
+object Hood {
     //TODO reverse 53 and 33
 
     var offset = 0.0
@@ -14,15 +14,15 @@ object Glider {
 
     var FAR_DEGREE = 40.0
 
-    private lateinit var servoGlider: ServoImplEx
+    private lateinit var servoHood: ServoImplEx
 
     fun init(hardwareMap: HardwareMap) {
-        servoGlider = hardwareMap.get(ServoImplEx::class.java, "servoGlider")
-        servoGlider.pwmRange = PwmRange(500.0, 2500.0)
+        servoHood = hardwareMap.get(ServoImplEx::class.java, "servoHood")
+        servoHood.pwmRange = PwmRange(500.0, 2500.0)
     }
 
     fun setPosition(position: Double) {
-        servoGlider.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
+        servoHood.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
     }
 
     fun setPositionDeg(degrees: Double) {
@@ -34,14 +34,14 @@ object Glider {
         // Map degrees to servo position: 33° -> HIGHER_LIMIT, 53° -> LOWER_LIMIT
         val position = HIGHER_LIMIT - (clampedDeg - minDeg) * (HIGHER_LIMIT - LOWER_LIMIT) / (maxDeg - minDeg)
 
-        servoGlider.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
+        servoHood.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
     }
 
     fun getPosition(): Double {
-        return servoGlider.position
+        return servoHood.position
     }
 
-    fun glide(distance:Double):Double
+    fun adjust(distance:Double):Double
     {
         return MathFunctions.clamp(0.0, 0.0, 0.0)
     }

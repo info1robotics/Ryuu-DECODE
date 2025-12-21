@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.common.Log
-import org.firstinspires.ftc.teamcode.subsystems.Glider
+import org.firstinspires.ftc.teamcode.subsystems.Hood
 import org.firstinspires.ftc.teamcode.subsystems.Shooter
 
 @TeleOp
@@ -25,7 +25,7 @@ class AutoAimTesting : LinearOpMode() {
 
     override fun runOpMode() {
         Shooter.init(hardwareMap)
-        Glider.init(hardwareMap)
+        Hood.init(hardwareMap)
         log = Log(telemetry)
         waitForStart()
 
@@ -34,11 +34,11 @@ class AutoAimTesting : LinearOpMode() {
             if(tuning)
             {
                 Shooter.setRPM(rpm)
-                Glider.setPositionDeg(deg)
+                Hood.setPositionDeg(deg)
             }
             else
             {
-                Glider.glide(distance)
+                Hood.adjust(distance)
                 Shooter.shoot(distance)
             }
             log.add("if the tuning variable is true then you manually change the rpm and degrees" +

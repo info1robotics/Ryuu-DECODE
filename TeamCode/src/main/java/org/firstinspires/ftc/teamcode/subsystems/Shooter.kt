@@ -85,7 +85,7 @@ object Shooter {
 
     fun shoot(distance:Double):Double
     {
-        return MathFunctions.clamp(0.0, 0.0, 0.0)
+        return MathFunctions.clamp(0.0, 0.0, MAX_RPM)
     }
 
 }

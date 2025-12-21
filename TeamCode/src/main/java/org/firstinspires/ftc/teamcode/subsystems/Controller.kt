@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems
 
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.roadrunner.TankDrive.Params
 import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
 
 object Controller {
@@ -17,7 +16,7 @@ object Controller {
         Intake.init(hardwareMap)
         Shooter.init(hardwareMap)
         Turret.init(hardwareMap)
-        Glider.init(hardwareMap)
+        Hood.init(hardwareMap)
         Limelight.init(hardwareMap)
         Jack.init(hardwareMap)
         state = State.INIT
@@ -26,7 +25,7 @@ object Controller {
     fun setInit()
     {
 
-        Glider.setPositionDeg(Glider.FAR_DEGREE)
+        Hood.setPositionDeg(Hood.FAR_DEGREE)
         state = State.INIT
     }
 

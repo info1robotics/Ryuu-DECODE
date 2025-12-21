@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmodes
 
-import android.app.Notification.Action
-import android.service.controls.Control
-import com.acmerobotics.roadrunner.clamp
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.Gamepad
@@ -11,10 +8,7 @@ import org.firstinspires.ftc.teamcode.common.GamepadEx
 import org.firstinspires.ftc.teamcode.common.Log
 import org.firstinspires.ftc.teamcode.subsystems.Controller
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain
-import org.firstinspires.ftc.teamcode.subsystems.Glider
 import org.firstinspires.ftc.teamcode.subsystems.Intake
-import org.firstinspires.ftc.teamcode.subsystems.Shooter
-import org.firstinspires.ftc.teamcode.subsystems.Turret
 import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
 
 @TeleOp

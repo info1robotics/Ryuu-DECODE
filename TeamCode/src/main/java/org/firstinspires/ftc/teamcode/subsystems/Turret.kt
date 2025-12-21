@@ -29,5 +29,9 @@ object Turret {
     fun getPosition(): Double {
         return servoTurretFirst.position
     }
+    fun lock()
+    {
+
+    }
 
 }

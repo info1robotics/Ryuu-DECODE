@@ -2,9 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.debug
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles
 import org.firstinspires.ftc.teamcode.common.Log
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain
 import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
 
 @TeleOp
@@ -21,19 +19,14 @@ class DistanceToTag: LinearOpMode() {
 
         while (opModeIsActive() && !isStopRequested)
         {
+            var ta = Limelight.getTa()
+            var distance = ta?.let { Limelight.getDistanceToAprilTag(it) }
 
-            Limelight.getTa()?.let {
-                Limelight.getDistanceToAprilTag(
-                    it
-                ).toString()
-            }?.let {
-                log.add("distance",
-                    it
-                )
-            }
 
             Limelight.getTx()?.let { log.add("tx", it) }
             Limelight.getTa()?.let { log.add("ta", it) }
+            log.add(distance.toString())
+            log.tick()
 
         }
         Limelight.stop()

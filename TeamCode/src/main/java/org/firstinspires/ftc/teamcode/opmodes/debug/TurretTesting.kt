@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
 class TurretTesting : LinearOpMode() {
     companion object {
         @JvmField
-        var position = 0
+        var position = 0.0
         @JvmField
         var reset = false
 
@@ -27,16 +27,7 @@ class TurretTesting : LinearOpMode() {
         waitForStart()
 
         while (opModeIsActive()) {
-           // Turret.setPower(0.5)
-            Turret.lock()
-            //Turret.setPosition(position)
-            if(reset)
-            {
-                Turret.resetEncoder()
-            }
-           // log.add("Tx",Limelight.getTx().toString())
-            log.add("Motor Power", Turret.motorTurret.power)
-            log.add("target position",Turret.getCurrentPosition())
+            Turret.setPosition(position)
             log.tick()
         }
     }

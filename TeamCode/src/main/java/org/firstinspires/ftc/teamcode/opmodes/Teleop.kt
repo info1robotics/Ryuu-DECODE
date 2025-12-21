@@ -29,7 +29,8 @@ class Teleop : LinearOpMode() {
 
     private fun handleInputDrivetrain()
     {
-        val forwardPower = gamepad1.corrected_left_stick_y().toDouble()
+        val offset = 0.02
+        val forwardPower = gamepad1.corrected_left_stick_y().toDouble()+offset
         val strafePower =   gamepad1.left_stick_x.toDouble()
         val primaryRotationPower = gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble()
 
@@ -66,7 +67,6 @@ class Teleop : LinearOpMode() {
         Controller.init(hardwareMap)
         Limelight.start()
         Limelight.changePipeline(0)
-        Turret.resetEncoder()
         val log = Log(telemetry)
 
 
@@ -82,7 +82,6 @@ class Teleop : LinearOpMode() {
             gamepadEx1.update()
             gamepadEx2.update()
             actionQueue.update()
-            log.add(Turret.getTargetPosition().toString())
             log.tick()
         }
     }

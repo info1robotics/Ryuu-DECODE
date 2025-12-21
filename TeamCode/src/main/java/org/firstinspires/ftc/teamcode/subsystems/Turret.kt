@@ -1,70 +1,33 @@
 package org.firstinspires.ftc.teamcode.subsystems
 
-import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.common.AprilTags
-import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
-import kotlin.math.absoluteValue
-import kotlin.math.sign
+import com.qualcomm.robotcore.hardware.PwmControl.PwmRange
+import com.qualcomm.robotcore.hardware.ServoImplEx
 
 object Turret {
 
-    private const val TICKS_PER_REV = 1600 * 6 // Gearbox 1:6
-    private const val TICKS_PER_DEG = TICKS_PER_REV / 360.0
-
-    const val RIGHT_LIMIT = 180
-    const val LEFT_LIMIT = -370
-
-    lateinit var motorTurret: DcMotorEx
-    private var lastError = 0.0
-
-    private val deadZoneDeg = 1.0 // When close enough to centered
+    var offset = 0.0
+    var HIGHER_LIMIT = 1.0
+    var LOWER_LIMIT = 0.0
+    private lateinit var servoTurretFirst: ServoImplEx
+    private lateinit var servoTurretSecond: ServoImplEx
 
     fun init(hardwareMap: HardwareMap) {
-        motorTurret = hardwareMap.get(DcMotorEx::class.java, "motorTurret")
-        motorTurret.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        motorTurret.targetPosition = 0
-        motorTurret.mode = DcMotor.RunMode.RUN_TO_POSITION
+        servoTurretFirst = hardwareMap.get(ServoImplEx::class.java, "servoTurretFirst")
+        servoTurretSecond = hardwareMap.get(ServoImplEx::class.java, "servoTurretSecond")
+        servoTurretFirst.pwmRange = PwmRange(500.0, 2500.0)
+        servoTurretSecond.pwmRange = PwmRange(500.0, 2500.0)
+        servoTurretFirst.position = 0.0
+        servoTurretSecond.position = 0.0
     }
 
-    fun resetEncoder() {
-        motorTurret.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        motorTurret.targetPosition = 0
-        motorTurret.mode = DcMotor.RunMode.RUN_TO_POSITION
+    fun setPosition(position: Double) {
+        servoTurretFirst.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
+        servoTurretSecond.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
     }
 
-    fun setPower(power: Double) {
-        motorTurret.power = power
-    }
-
-    fun hold() {
-        motorTurret.power = 0.0
-    }
-    fun default()
-    {
-        motorTurret.power=1.0
-        motorTurret.targetPosition = 0
-    }
-    fun setPosition(target: Int) {
-        val current = getCurrentPosition()
-        // val power = pidController.calculate(target.toDouble(), current.toDouble()).coerceIn(-1.0, 1.0)
-        motorTurret.targetPosition = target.coerceIn(LEFT_LIMIT, RIGHT_LIMIT)
-    }
-    fun getTargetPosition(): Int {
-        return motorTurret.targetPosition
-    }
-    fun getCurrentPosition():Int{
-        return motorTurret.currentPosition
-    }
-
-    fun withoutEncoder() {
-        motorTurret.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-    }
-    private var lastTx = 0.0
-    private var lastTime = System.currentTimeMillis()
-
-    fun lock() {
+    fun getPosition(): Double {
+        return servoTurretFirst.position
     }
 
 }

@@ -26,7 +26,7 @@ class IntakeTesting : LinearOpMode() {
 
         while (opModeIsActive()) {
             Intake.setPower(power)
-            log.add("Intake Power",Intake.motorIntake.power)
+            log.add("Intake Power",Intake.motorIntakeMain.power)
             log.tick()
         }
     }

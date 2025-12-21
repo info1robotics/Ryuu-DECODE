@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.subsystems.extra
 
-import com.qualcomm.hardware.limelightvision.Limelight3A
-import com.qualcomm.hardware.limelightvision.LLResult
-import com.qualcomm.robotcore.hardware.HardwareMap
+import android.R.attr.x
+import android.R.attr.y
 import android.util.Log
+import com.qualcomm.hardware.limelightvision.Limelight3A
+import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.common.AprilTags
 import kotlin.math.abs
-import kotlin.math.sqrt
+import kotlin.math.pow
+
 
 object Limelight {
     private lateinit var limelight: Limelight3A
@@ -67,11 +69,7 @@ object Limelight {
     fun isGPP() = getAprilTagId() == AprilTags.PPG
     fun isAlliance() = getAprilTagId() == allianceTag
 
-    fun getDistanceToAprilTag(
-        ta:Double
-    ): Double? {
-        val scale = 0.0//edit based on the graph
-        var distance = scale/ta
-        return distance
+    fun getDistanceToAprilTag(ta: Double): Double {
+        return 188.8901 * ta.pow(-0.607961)
     }
 }

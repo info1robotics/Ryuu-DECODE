@@ -18,13 +18,12 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.openftc.easyopencv.OpenCvCamera
 import org.openftc.easyopencv.OpenCvPipeline
 
-abstract class AutoBase(val startPose: Pose = Pose(0.0, 0.0, Math.toRadians(0.0))) : LinearOpMode() {
+abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadians(0.0))) : LinearOpMode() {
 
     lateinit var gamepadEx1: GamepadEx
 
     lateinit var follower: Follower
     lateinit var log: Log
-    var startPos: AutoStartPos = AutoStartPos.UNKNOWN
     lateinit var camera: OpenCvCamera
     lateinit var pipeline: OpenCvPipeline
 
@@ -55,22 +54,6 @@ abstract class AutoBase(val startPose: Pose = Pose(0.0, 0.0, Math.toRadians(0.0)
         state = State.INIT
 
         while (!isStarted && !isStopRequested) {
-
-            if (gamepad1.a) {
-                full = true
-            }
-            if (gamepad1.b) {
-                full = false
-            }
-
-            if (full) {
-                log.add("Running Full")
-
-            } else {
-                log.add("No detection")
-            }
-
-
             gamepadEx1.update()
             log.tick()
         }

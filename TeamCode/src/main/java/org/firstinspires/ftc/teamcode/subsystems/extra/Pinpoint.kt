@@ -1,47 +1,28 @@
 package org.firstinspires.ftc.teamcode.pinpoint
 
-//import com.pedropathing.localization.Pose
-import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
+import org.firstinspires.ftc.teamcode.enums.Colours
 import kotlin.math.pow
-import kotlin.math.round
+import kotlin.math.sqrt
 
 object Pinpoint {
-    fun Double.roundTo(decimals: Int): Double {
-        val factor = 10.0.pow(decimals)
-        return round(this * factor) / factor
+    const val RED_GOAL_X = -58.37
+    const val RED_GOAL_Y = 55.64
+    const val BLUE_GOAL_X = -58.37
+    const val BLUE_GOAL_Y = -55.64
+
+    fun init(hardwareMap: HardwareMap) {}
+
+    fun distance(currentX: Double, currentY: Double, colour: Colours): Double {
+        val (goalX, goalY) = when (colour) {
+            Colours.RED -> RED_GOAL_X to RED_GOAL_Y
+            Colours.BLUE -> BLUE_GOAL_X to BLUE_GOAL_Y
+
+        }
+
+        return sqrt(
+            (goalX - currentX).pow(2) +
+                    (goalY - currentY).pow(2)
+        )
     }
-
-    //lateinit var pinpoint: com.pedropathing.localization.GoBildaPinpointDriver
-
-    @JvmStatic
-    fun init(hardwareMap: HardwareMap) {
-        /*
-        pinpoint = hardwareMap.get(com.pedropathing.localization.GoBildaPinpointDriver::class.java, "pinpoint")
-        pinpoint.setOffsets(89.5, 151.5)
-        pinpoint.setEncoderResolution(com.pedropathing.localization.GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
-        pinpoint.setEncoderDirections(com.pedropathing.localization.GoBildaPinpointDriver.EncoderDirection.REVERSED, com.pedropathing.localization.GoBildaPinpointDriver.EncoderDirection.REVERSED);
-        pinpoint.resetPosAndIMU()
-
-         */
-    }
-
-    @JvmStatic
-    fun reset() {
-        //pinpoint.resetPosAndIMU()
-    }
-
-    @JvmStatic
-    fun update() {
-        //pinpoint.update()
-    }
-
-    @JvmStatic
-    fun getPosition() {
-        //return pinpoint.position
-    }
-
 }

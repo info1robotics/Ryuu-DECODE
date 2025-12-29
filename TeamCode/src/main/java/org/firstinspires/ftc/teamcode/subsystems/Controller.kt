@@ -17,7 +17,7 @@ object Controller {
         Shooter.init(hardwareMap)
         Turret.init(hardwareMap)
         Hood.init(hardwareMap)
-        //Limelight.init(hardwareMap)
+        Limelight.init(hardwareMap)
         Joint.init(hardwareMap)
         Jack.init(hardwareMap)
         state = State.INIT

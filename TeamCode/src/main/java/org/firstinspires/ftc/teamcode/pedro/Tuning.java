@@ -129,7 +129,7 @@ public class Tuning extends SelectableOpMode {
  * @author Baron Henderson - 20077 The Indubitables
  * @version 1.0, 5/6/2024
  */
-class LocalizationTest extends OpMode {
+class  LocalizationTest extends OpMode {
     @Override
     public void init() {}
 
@@ -1180,15 +1180,7 @@ class Circle extends OpMode {
             follower.followPath(circle);
         }
     }
-}
-
-/**
- * This is the Drawing class. It handles the drawing of stuff on Panels Dashboard, like the robot.
- *
- * @author Lazar - 19234
- * @version 1.1, 5/19/2025
- */
-/**
+}/**
  * This is the Drawing class. It handles the drawing of stuff on Panels Dashboard, like the robot.
  *
  * @author Lazar - 19234
@@ -1214,7 +1206,7 @@ class Drawing {
 
     /**
      * This draws everything that will be used in the Follower's telemetryDebug() method. This takes
-     * a Follower as an input, so an instance of the DashbaordDrawingHandler class is not needed.
+     * a Follower as an input, so an instance of the DashboardDrawingHandler class is not needed.
      *
      * @param follower Pedro Follower instance.
      */
@@ -1333,3 +1325,4 @@ class Drawing {
         panelsField.update();
     }
 }
+

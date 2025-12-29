@@ -12,8 +12,9 @@ import kotlin.math.pow
 
 object Limelight {
     private lateinit var limelight: Limelight3A
-
-    val allianceTag = AprilTags.BLUE // TODO: change if needed
+    private val MAX_TA = 4.44 // 75 cm
+    private val MIN_TA = 0.9 // 200 cm
+    private val allianceTag = AprilTags.BLUE // TODO: change if needed
 
     fun init(hardwareMap: HardwareMap, pipelineIndex: Int = 0) {
         limelight = hardwareMap.get(Limelight3A::class.java, "limelight")
@@ -70,6 +71,6 @@ object Limelight {
     fun isAlliance() = getAprilTagId() == allianceTag
 
     fun getDistanceToAprilTag(ta: Double): Double {
-        return 188.8901 * ta.pow(-0.607961)
+        return 183.7775 * ta.pow(-0.6633485)
     }
 }

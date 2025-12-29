@@ -83,9 +83,12 @@ object Shooter {
         return motorShooterFirst.power
     }
 
-    fun shoot(distance:Double):Double
-    {
-        return MathFunctions.clamp(0.0, 0.0, MAX_RPM)
+    fun calculate(distance: Double): Double {
+        val rpm = 56_903_440 +
+                (1871.611 - 56_903_440) /
+                (1 + Math.pow(distance / 9_216_898_000.0, 0.5812736))
+
+        return MathFunctions.clamp(rpm, 0.0, MAX_RPM)
     }
 
 }

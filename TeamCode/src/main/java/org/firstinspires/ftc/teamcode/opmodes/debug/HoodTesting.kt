@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Hood
 @TeleOp
 @Config
 
-class GliderTesting : LinearOpMode() {
+class HoodTesting : LinearOpMode() {
     companion object {
         @JvmField
         var position = 0.0

@@ -41,8 +41,11 @@ object Hood {
         return servoHood.position
     }
 
-    fun adjust(distance:Double):Double
-    {
-        return MathFunctions.clamp(0.0, 0.0, 0.0)
+    fun calculate(distance: Double): Double {
+        val y = 0.7974182 +
+                (-0.0814353 - 0.7974182) /
+                (1 + Math.pow(distance / 127.9924, 4.534131))
+
+        return MathFunctions.clamp(y, 0.0, 1.0)
     }
 }

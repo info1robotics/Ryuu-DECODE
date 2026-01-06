@@ -4,6 +4,7 @@ import com.pedropathing.math.MathFunctions
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.PwmControl.PwmRange
 import com.qualcomm.robotcore.hardware.ServoImplEx
+import kotlin.math.pow
 
 object Hood {
     //TODO reverse 53 and 33
@@ -32,7 +33,8 @@ object Hood {
         val clampedDeg = degrees.coerceIn(minDeg, maxDeg)
 
         // Map degrees to servo position: 33° -> HIGHER_LIMIT, 53° -> LOWER_LIMIT
-        val position = HIGHER_LIMIT - (clampedDeg - minDeg) * (HIGHER_LIMIT - LOWER_LIMIT) / (maxDeg - minDeg)
+        val position =
+            HIGHER_LIMIT - (clampedDeg - minDeg) * (HIGHER_LIMIT - LOWER_LIMIT) / (maxDeg - minDeg)
 
         servoHood.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
     }
@@ -41,11 +43,13 @@ object Hood {
         return servoHood.position
     }
 
+
     fun calculate(distance: Double): Double {
-        val y = 0.7974182 +
-                (-0.0814353 - 0.7974182) /
-                (1 + Math.pow(distance / 127.9924, 4.534131))
+        val y = 0.9551378 +
+                (-0.02571194 - 0.9551378) /
+                (1 + (distance / 168.7368).pow(3.657507))
 
         return MathFunctions.clamp(y, 0.0, 1.0)
     }
+
 }

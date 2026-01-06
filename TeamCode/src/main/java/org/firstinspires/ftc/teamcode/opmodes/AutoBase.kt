@@ -9,10 +9,14 @@ import org.firstinspires.ftc.teamcode.common.ActionQueue
 import org.firstinspires.ftc.teamcode.common.GamepadEx
 import org.firstinspires.ftc.teamcode.common.Log
 import org.firstinspires.ftc.teamcode.enums.AutoStartPos
+import org.firstinspires.ftc.teamcode.enums.Colours
 import org.firstinspires.ftc.teamcode.pedro.Constants
+import org.firstinspires.ftc.teamcode.pinpoint.Pinpoint
 
 import org.firstinspires.ftc.teamcode.subsystems.Controller
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain
+import org.firstinspires.ftc.teamcode.subsystems.Hood
+import org.firstinspires.ftc.teamcode.subsystems.Shooter
 import org.firstinspires.ftc.teamcode.tasks.Task
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.openftc.easyopencv.OpenCvCamera
@@ -20,6 +24,7 @@ import org.openftc.easyopencv.OpenCvPipeline
 
 abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadians(0.0))) : LinearOpMode() {
 
+    var allianceColour:Colours = Colours.RED
     lateinit var gamepadEx1: GamepadEx
 
     lateinit var follower: Follower
@@ -32,11 +37,16 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
 
     var actionQueue = ActionQueue()
 
+    var distance=0.0
+    var deg = 0.0
+    var power = 0.0
     var full = true
+
 @CallSuper
     open fun onInit() {
         gamepadEx1 = GamepadEx(gamepad1)
         Drivetrain.initAuto(hardwareMap)
+        Pinpoint.init(hardwareMap)
        // Limelight.init(hardwareMap)
 
         follower = Constants.createFollower(hardwareMap);
@@ -74,10 +84,15 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
     }
 
     fun onStartTick() {
+        distance = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
+        power = Shooter.calculate(distance)
+        deg = Hood.calculate(distance)
         follower.update()
         log.add("@X", follower.pose.x)
         log.add("@Y", follower.pose.y)
         log.add("@Heading", Math.toDegrees(follower.pose.heading))
+        log.add("distance from"+allianceColour.toString()+"goal" + distance)
+
         task.tick()
         log.tick()
 

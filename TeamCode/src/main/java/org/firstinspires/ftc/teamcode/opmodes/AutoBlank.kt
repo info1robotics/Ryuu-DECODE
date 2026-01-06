@@ -6,6 +6,7 @@ import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import org.firstinspires.ftc.teamcode.common.AutoUtil.p
 import org.firstinspires.ftc.teamcode.common.AutoUtil.rad
+import org.firstinspires.ftc.teamcode.enums.Colours
 import org.firstinspires.ftc.teamcode.subsystems.Controller
 import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
 import org.firstinspires.ftc.teamcode.tasks.Task
@@ -31,21 +32,21 @@ class AutoBlank : AutoBase(Pose(0.0,0.0, Math.toRadians(0.0))) {
     fun stopMidTrajectory() {
         follower.holdPoint(follower.pose)
     }
-    private val collectSeq = serial(
-
+    private val seq = serial(
+        //execute{action}
     )
     
     override fun onInit(){
         super.onInit()
-
+        allianceColour=  Colours.RED//TODO change for each auto
 
 
         task = serial(
-            execute{ goTo(0.0,0.0,0.0) },//coordinates of the submersible
-            sleepms(200),
+            execute{ goTo(0.0,0.0,0.0) },//middle of the field
+            sleepms(200),//wait for the previous action to stop
             execute{ goTo(20.0,0.0,0.0) },//strafe left
-            execute{stopMidTrajectory()},//the sample in the intake's range,
-            execute{collectSeq}
+            execute{stopMidTrajectory()},//stops
+            execute{seq}
         )
 
 

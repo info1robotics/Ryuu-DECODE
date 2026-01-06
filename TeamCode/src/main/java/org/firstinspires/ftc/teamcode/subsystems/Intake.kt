@@ -23,6 +23,9 @@ object Intake {
         motorIntakeMain.direction = DcMotorSimple.Direction.FORWARD
         motorIntakeSupport.direction = DcMotorSimple.Direction.REVERSE
 
+        motorIntakeMain.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        motorIntakeSupport.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+
         val motorConfigurationType = motorIntakeMain.motorType.clone()
         motorConfigurationType.achieveableMaxRPMFraction = 1.0
 
@@ -74,8 +77,10 @@ object Intake {
 
     fun isEmpty():Boolean{
         val (r, g, b) = getColorReading()
-        return r in 10..80 && g in 10..90 && b in 10..70//TODO tune
+        return r in 15..70 && g in 15..80 && b in 15..60//TODO tune
     }
+
+
 
 
 }

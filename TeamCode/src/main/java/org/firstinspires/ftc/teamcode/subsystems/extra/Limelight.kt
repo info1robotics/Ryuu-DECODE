@@ -14,7 +14,7 @@ object Limelight {
     private lateinit var limelight: Limelight3A
     private val MAX_TA = 4.44 // 75 cm
     private val MIN_TA = 0.9 // 200 cm
-    private val allianceTag = AprilTags.BLUE // TODO: change if needed
+    public var allianceTag = AprilTags.RED // TODO: change if needed
 
     fun init(hardwareMap: HardwareMap, pipelineIndex: Int = 0) {
         limelight = hardwareMap.get(Limelight3A::class.java, "limelight")

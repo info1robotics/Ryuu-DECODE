@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.PwmControl.PwmRange
 import com.qualcomm.robotcore.hardware.ServoImplEx
+import org.firstinspires.ftc.teamcode.enums.Colours
 
 object Turret {
 
@@ -25,9 +26,9 @@ object Turret {
     fun getPosition(): Double {
         return servoTurret.position
     }
-    fun lock(heading:Double)
+    fun lock()
     {
-        servoTurret.position = heading
+
     }
 
 }

@@ -17,9 +17,10 @@ object Controller {
         Shooter.init(hardwareMap)
         Turret.init(hardwareMap)
         Hood.init(hardwareMap)
-        Limelight.init(hardwareMap)
+        Limelight.init(hardwareMap,0)
         Joint.init(hardwareMap)
         Jack.init(hardwareMap)
+        Wicket.init(hardwareMap)
         state = State.INIT
     }
 
@@ -31,6 +32,7 @@ object Controller {
 
     fun setInitAuto()
     {
+        Joint.setPosition(Joint.INIT_POSITION)
         state = State.INIT
     }
 

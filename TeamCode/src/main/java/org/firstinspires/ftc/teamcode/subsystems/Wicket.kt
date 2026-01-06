@@ -5,18 +5,18 @@ import com.qualcomm.robotcore.hardware.PwmControl.PwmRange
 import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.ServoImplEx
 
-object Joint {
+object Wicket {
 
-    var COLLECT_POSITION = 0.445
-    var INIT_POSITION = 0.275
+    var OPEN_POSITION = 0.445
+    var CLOSE_POSITION = 0.33
 
     private lateinit var servoJoint: ServoImplEx
 
     fun init(hardwareMap: HardwareMap) {
-        servoJoint = hardwareMap.get(ServoImplEx::class.java, "servoJoint")
+        servoJoint = hardwareMap.get(ServoImplEx::class.java, "servoWicket")
         servoJoint.direction = Servo.Direction.REVERSE
         servoJoint.pwmRange = PwmRange(500.0, 2500.0)
-        servoJoint.position = INIT_POSITION
+        servoJoint.position = CLOSE_POSITION
     }
 
     fun setPosition(position: Double) {

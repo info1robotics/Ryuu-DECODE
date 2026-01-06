@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems
 
 import com.pedropathing.math.MathFunctions
+import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
@@ -15,9 +16,12 @@ object Shooter {
     private lateinit var voltageSensor: VoltageSensor
 
     private const val MOTOR_TICKS_PER_REV = 28
-    private const val MAX_RPM = 5800.0
+    const val MAX_RPM = 3428.0//
+    const val MAX_VELOCITY = 1700.0//overshoots
+    const val FAR_POWER=1400
 
-    private val BASE_PIDF = PIDFCoefficients(0.005, 0.0003, 0.0001, 12.0) // Base feedforward at 12V
+
+    private val BASE_PIDF = PIDFCoefficients(190.0, 0.00000, 0.0000, 14.9) // Base feedforward at 12V
 
     fun init(hardwareMap: HardwareMap) {
         motorShooterFirst = hardwareMap.get(DcMotorEx::class.java, "motorShooterFirst")
@@ -26,8 +30,15 @@ object Shooter {
         motorShooterFirst.direction = DcMotorSimple.Direction.REVERSE
         motorShooterSecond.direction = DcMotorSimple.Direction.REVERSE
 
+        motorShooterFirst.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
+        motorShooterFirst.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
+
+        motorShooterFirst.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        motorShooterSecond.mode = DcMotor.RunMode.RUN_USING_ENCODER
+
         val config = motorShooterFirst.motorType.clone()
         config.achieveableMaxRPMFraction = 1.0
+
         motorShooterFirst.motorType = config
         motorShooterSecond.motorType = config
 
@@ -36,9 +47,8 @@ object Shooter {
         applyPIDFCoefficients(BASE_PIDF)
     }
 
-    private fun applyPIDFCoefficients(base: PIDFCoefficients) {
-        val compensatedF = base.f * (12.0 / voltageSensor.voltage)
-        val compensated = PIDFCoefficients(base.p, base.i, base.d, compensatedF)
+    fun applyPIDFCoefficients(base: PIDFCoefficients) {
+        val compensated = PIDFCoefficients(base.p, base.i, base.d, base.f)
         motorShooterFirst.setVelocityPIDFCoefficients(
             compensated.p,
             compensated.i,
@@ -53,11 +63,20 @@ object Shooter {
         )
     }
 
+    fun setVelocity(velo:Double)
+    {
+        motorShooterFirst.velocity = velo
+        motorShooterSecond.velocity = velo
+    }
+    fun getVelocity(): Double {
+     return motorShooterFirst.velocity
+    }
+
     fun setRPM(rpm: Double) {
         val targetVelocityTicksPerSec = (rpm * MOTOR_TICKS_PER_REV) / 60.0
-        applyPIDFCoefficients(BASE_PIDF)
         motorShooterFirst.velocity = targetVelocityTicksPerSec
         motorShooterSecond.velocity = targetVelocityTicksPerSec
+
     }
 
     fun getRPM(): Double {
@@ -84,11 +103,11 @@ object Shooter {
     }
 
     fun calculate(distance: Double): Double {
-        val rpm = 56_903_440 +
-                (1871.611 - 56_903_440) /
-                (1 + Math.pow(distance / 9_216_898_000.0, 0.5812736))
-
+        val rpm = 719.7191 * distance.pow(0.245412)
         return MathFunctions.clamp(rpm, 0.0, MAX_RPM)
     }
-
+    fun charge()
+    {
+        setRPM(2000.0)
+    }
 }

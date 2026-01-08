@@ -39,13 +39,11 @@ class AutoBlank : AutoBase(Pose(0.0,0.0, Math.toRadians(0.0))) {
     override fun onInit(){
         super.onInit()
         allianceColour=  Colours.RED//TODO change for each auto
-
-
         task = serial(
             execute{ goTo(0.0,0.0,0.0) },//middle of the field
             sleepms(200),//wait for the previous action to stop
             execute{ goTo(20.0,0.0,0.0) },//strafe left
-            execute{stopMidTrajectory()},//stops
+            execute{stopMidTrajectory()},//stops at the point in time
             execute{seq}
         )
 

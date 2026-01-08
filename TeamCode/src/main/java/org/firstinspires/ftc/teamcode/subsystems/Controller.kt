@@ -32,6 +32,8 @@ object Controller {
 
     fun setInitAuto()
     {
+        Wicket.setPosition(Wicket.CLOSE_POSITION)
+        Turret.setPosition(0.5)
         Joint.setPosition(Joint.INIT_POSITION)
         state = State.INIT
     }

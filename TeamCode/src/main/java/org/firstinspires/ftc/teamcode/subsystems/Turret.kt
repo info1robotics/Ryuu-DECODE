@@ -11,12 +11,12 @@ object Turret {
     var HIGHER_LIMIT = 1.0//180 turning right
     var LOWER_LIMIT = 0.0//180 turing left
     var FORWARD_POSITION = 0.5
-    private lateinit var servoTurret: ServoImplEx//five turn servo
+    private lateinit var servoTurret: ServoImplEx//five turn serv
 
     fun init(hardwareMap: HardwareMap) {
         servoTurret = hardwareMap.get(ServoImplEx::class.java, "servoTurret")
         servoTurret.pwmRange = PwmRange(500.0, 2500.0)
-        servoTurret.position = FORWARD_POSITION
+        servoTurret.position = 0.5
     }
 
     fun setPosition(position: Double) {

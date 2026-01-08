@@ -3,26 +3,28 @@ package org.firstinspires.ftc.teamcode.opmodes.debug
 import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import org.firstinspires.ftc.teamcode.common.ActionQueue
 import org.firstinspires.ftc.teamcode.common.Log
-import org.firstinspires.ftc.teamcode.subsystems.Turret
-import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
-@Config
+import org.firstinspires.ftc.teamcode.subsystems.Joint
+import org.firstinspires.ftc.teamcode.subsystems.Wicket
+
 @TeleOp
-class TurretTesting : LinearOpMode() {
+@Config
+class WicketTesting : LinearOpMode() {
+    private val actionQueue = ActionQueue()
     companion object {
         @JvmField
-        var position = 0.5
-
+        var position = Wicket.CLOSE_POSITION
     }
     lateinit var log: Log
     override fun runOpMode() {
-        Turret.init(hardwareMap)
+        Wicket.init(hardwareMap)
         log = Log(this.telemetry)
         waitForStart()
 
         while (opModeIsActive()) {
-            Turret.setPosition(position)
-            log.add("Turret position",Turret.getPosition())
+            Wicket.setPosition(position)
+            log.add("Wicket Position",Wicket.getPosition())
             log.tick()
         }
     }

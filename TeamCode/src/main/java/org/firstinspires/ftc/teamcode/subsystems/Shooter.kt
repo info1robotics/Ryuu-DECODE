@@ -101,13 +101,15 @@ object Shooter {
     fun getPower(): Double {
         return motorShooterFirst.power
     }
-
     fun calculate(distance: Double): Double {
-        val rpm = 719.7191 * distance.pow(0.245412)
-        return MathFunctions.clamp(rpm, 0.0, MAX_RPM)
+        val value = 10190.93 +
+                (1823.04 - 10190.93) /
+                (1 + (distance / 563.5116).pow(2.22067))
+
+        return MathFunctions.clamp(value, 0.0, MAX_RPM)
     }
     fun charge()
     {
-        setRPM(2300.0)
+        setRPM(1600.0)
     }
 }

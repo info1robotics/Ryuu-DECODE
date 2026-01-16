@@ -11,4 +11,11 @@ class PidController(val kP: Double, val kI: Double, val kD: Double) {
         lastError = error
         return (kP * error) + (kI * integral) + (kD * derivative)
     }
+
+    fun updateTurret(error: Double): Double {
+        integral += error
+        val derivative = error - lastError
+        lastError = error
+        return kP * error + kI * integral + kD * derivative
+    }
 }

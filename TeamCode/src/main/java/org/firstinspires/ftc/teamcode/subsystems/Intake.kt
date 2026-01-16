@@ -44,6 +44,10 @@ object Intake {
     fun setPowerSupport(power: Double) {
         motorIntakeSupport.power = power
     }
+    fun getPowerMain(): Double {
+        return motorIntakeMain.power
+    }
+
     fun stop() {
         motorIntakeMain.power = 0.0
         motorIntakeSupport.power = 0.0

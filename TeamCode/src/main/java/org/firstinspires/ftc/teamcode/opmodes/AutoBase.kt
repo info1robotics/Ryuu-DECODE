@@ -75,7 +75,7 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
     fun onStart() {
         if (isStopRequested) return
 
-        println("left init while loop")
+        println("left init while loop ")
         println(isStarted)
         println(isStopRequested)
         log.tick()
@@ -91,7 +91,7 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
         log.add("@X", follower.pose.x)
         log.add("@Y", follower.pose.y)
         log.add("@Heading", Math.toDegrees(follower.pose.heading))
-        log.add("distance from"+allianceColour.toString()+"goal" + distance)
+        log.add("2 distance from"+allianceColour.toString()+"goal" + distance)
 
         task.tick()
         log.tick()

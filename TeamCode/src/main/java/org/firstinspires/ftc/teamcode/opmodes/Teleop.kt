@@ -20,13 +20,17 @@ import org.firstinspires.ftc.teamcode.subsystems.Jack
 import org.firstinspires.ftc.teamcode.subsystems.Joint
 import org.firstinspires.ftc.teamcode.subsystems.Shooter
 import org.firstinspires.ftc.teamcode.subsystems.Turret
+import org.firstinspires.ftc.teamcode.subsystems.Wicket
 import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
+import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepuntil
+import kotlin.math.absoluteValue
+
 @TeleOp
 class Teleop : LinearOpMode() {
 
     fun Gamepad.corrected_left_stick_y(): Float = -this.left_stick_y
 
-    private var startPose: Pose = AutoConstants.RED_TELE_POS
+    private var startPose: Pose = AutoConstants.CENTER_POS
     private var allianceColour:Colours = Colours.RED
 
     lateinit var gamepadEx1: GamepadEx
@@ -39,41 +43,61 @@ class Teleop : LinearOpMode() {
     private var distanceLL = 0.0//distance got from limelight
     private var distancePP = 0.0//distance got from odo
     private var distance = 0.0
-    private var heading = 0.0//robot s heading
-    private var max = 200
-
+    private var max = 250
+    var forwardPower =0.0
+    var strafePower = 0.0
+    var primaryRotationPower =0.0
+    var secondaryRotationPower = 0.0
     private fun handleInputDrivetrain()
     {
-        val forwardPower = gamepad1.corrected_left_stick_y().toDouble()
-        val strafePower =   gamepad1.left_stick_x.toDouble()
-        val primaryRotationPower = (gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble())*0.6
-        Drivetrain.driveMecanum(forwardPower, strafePower, primaryRotationPower, 1.0)
+        forwardPower = gamepad1.corrected_left_stick_y().toDouble()
+        strafePower =   gamepad1.left_stick_x.toDouble()
+        primaryRotationPower = (gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble())
+
+        secondaryRotationPower = if(gamepad1.right_bumper)
+            0.2
+        else if(gamepad1.left_bumper)
+            -0.2
+        else
+            0.0
+
+        if(primaryRotationPower==0.0)
+            Drivetrain.driveMecanum(forwardPower, strafePower, secondaryRotationPower, 1.0)
+        else
+            Drivetrain.driveMecanum(forwardPower, strafePower, primaryRotationPower, 1.0)
+
+
+        if(gamepad1.x)
+        {
+            follower = Constants.createFollower(hardwareMap)
+            follower.pose = Pose(120.0,123.0,32.0)
+
+        }
+        if(gamepad1.y)
+        {
+            follower = Constants.createFollower(hardwareMap)
+            follower.pose = Pose(24.0,123.0,138.0)
+
+        }
     }
     private fun handleInputIntake()
     {
-        /*
-        if(!Intake.isEmpty())
-            empty=0.0
-
-         */
-        if(gamepadEx2.getButtonDown("x") && empty==1.0)
-            empty=0.0
-        else if(gamepadEx2.getButtonDown("x") && empty==0.0)
-            empty=1.0
-
         if(!transition)
         {
-            if(gamepad2.right_trigger+gamepad2.left_trigger>0)
-                Joint.setPosition(Joint.COLLECT_POSITION)
-            else
-                Joint.setPosition(Joint.INIT_POSITION)
+                if(gamepad2.right_trigger+gamepad2.left_trigger>0)
+                    Joint.setPosition(Joint.COLLECT_POSITION)
+                else
+                    Joint.setPosition(Joint.INIT_POSITION)
 
-            Intake.setPowerSupport((gamepad2.right_trigger.toDouble())*(0.3)*empty)
-            Intake.setPowerMain(gamepad2.right_trigger.toDouble()*1.0)
-            if (gamepad2.left_trigger > 0.1 ) {
-                Intake.reverse()
-                empty = 1.0
-            }
+                Intake.setPowerSupport((gamepad2.right_trigger.toDouble())*(0.6))
+                Intake.setPowerMain(gamepad2.right_trigger.toDouble())
+
+                if (gamepad2.left_trigger > 0.1 )
+                {
+                    Intake.reverse()
+                    empty = 1.0
+                }
+
         }
     }
     private fun handleInputJack()
@@ -82,61 +106,43 @@ class Teleop : LinearOpMode() {
         if(gamepad2.dpad_down) Jack.setPosition(Jack.HIGHER_LIMIT)
     }
     var far = false
+    var power =0.0
     private fun handleInputShooter() {
+        if(gamepadEx2.getButtonDown("y"))
+            Shooter.charge()
 
         if(distance<max)
         {
             far = false
-            var power = Shooter.calculate(distance)
             Hood.setPosition(Hood.calculate(distance))
             if(gamepadEx2.getButtonDown("a"))
             {
+                Wicket.setPosition(Wicket.OPEN_POSITION)
                 transition=true
-                Shooter.setRPM(power)
-                actionQueue.add(1000)
-                {
-                    Intake.setPower(0.7)
-                    actionQueue.add(600)
+                actionQueue.add(1200)//if this doesn t work 1200
                     {
-                        Intake.stop()
-                        Shooter.stop()
-                        transition = false
-                        empty = 1.0
-                    }
-                }
-            }
-        }
-        if(distancePP>max)
-        {
-            far=true
-            Hood.setPosition(Hood.HIGHER_LIMIT)
-            if(gamepadEx2.getButtonDown("a"))
-            {
-                transition=true
-                Shooter.setRPM(4800.0)
-                actionQueue.add(2100)
-                {
-                    Intake.setPower(1.0)
-                    actionQueue.add(100)
-                    {
-                        Shooter.setRPM(5100.0)
-                        actionQueue.add(600)
+                        Intake.setPowerMain(1.0)
+                        Intake.setPowerSupport(1.0)
+                        actionQueue.add(1200)
                         {
                             Intake.stop()
-                            Shooter.stop()
+                            Shooter.setRPM(0.0)
+                            Wicket.setPosition(Wicket.CLOSE_POSITION)
                             transition = false
                             empty = 1.0
                         }
                     }
-
-
-                }
             }
         }
 
+        if(transition)
+            Shooter.setRPM(power)
+
     }
+    var tx =0.0
     private fun handleInputTurret() {
-        Turret.lock()
+        Turret.setPosition(0.5)
+        //Turret.lock(tx)
     }
     override fun runOpMode() {
         gamepadEx1 = GamepadEx(gamepad1)
@@ -154,18 +160,6 @@ class Teleop : LinearOpMode() {
 
         Controller.setInit()
         empty=1.0
-        if(gamepad1.dpad_up) {
-            allianceColour = Colours.RED
-            startPose=AutoConstants.RED_TELE_POS
-            Limelight.allianceTag = AprilTags.RED
-        }
-        else if(gamepad1.dpad_down) {
-            allianceColour = Colours.BLUE
-            startPose = AutoConstants.BLUE_TELE_POS
-            Limelight.allianceTag = AprilTags.BLUE
-        }
-        log.add("choose alliance colour RED/BLUE by dpad up/down",allianceColour.toString())
-
         log.tick()
         waitForStart()
 
@@ -181,17 +175,28 @@ class Teleop : LinearOpMode() {
             gamepadEx2.update()
             actionQueue.update()
             follower.update()
-            heading = follower.pose.heading
 
+            if(gamepad1.dpad_right) {
+                allianceColour = Colours.RED
+                startPose=AutoConstants.RED_TELE_POS
+                Limelight.allianceTag = AprilTags.RED
+            }
+            else if(gamepad1.dpad_left) {
+                allianceColour = Colours.BLUE
+                startPose = AutoConstants.BLUE_TELE_POS
+                Limelight.allianceTag = AprilTags.BLUE
+            }
+
+            power = Shooter.calculate(distance)
             var ta = Limelight.getTa()
             var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }
             distancePP = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
             distance = distancePP//change distance method
 
-
+            log.add("choose alliance colour RED/BLUE by dpad left/right",allianceColour.toString())
             Limelight.getTx()?.let { log.add("tx", it) }
             Limelight.getTa()?.let  { log.add("ta", it) }
-
+            //tx= Limelight.getTx()!!
             log.add("distanceLL $distanceLL")
             log.add("distancePP $distancePP")
             //log.add("is empty",Intake.isEmpty())

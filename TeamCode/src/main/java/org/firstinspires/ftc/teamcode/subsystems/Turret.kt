@@ -66,12 +66,12 @@ object Turret {
         while (turretAngle < -PI) turretAngle += 2 * PI
 
         // Convert to servo position
-        val servoPosition =
+        val servoPosition =(
             FORWARD_POSITION +
                     (turretAngle / PI) * 0.85 +
-                    offset
+                    offset).coerceIn(-1.0,1.0)
 
-        setPosition(servoPosition)
+        setPosition(servoPosition.coerceIn(-1.0,1.0))
     }
 
 

@@ -36,9 +36,7 @@ class TurretTesting : LinearOpMode() {
 
         while (opModeIsActive()) {
             var tx = Limelight.getTx()
-            Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,Colours.RED)
-
-            //Limelight.getTx()?.let { log.add("tx", it) }
+            Turret.setPosition(position)
             log.add("@X", follower.pose.x)
             log.add("@Y", follower.pose.y)
             log.add("@Heading", Math.toDegrees(follower.pose.heading))

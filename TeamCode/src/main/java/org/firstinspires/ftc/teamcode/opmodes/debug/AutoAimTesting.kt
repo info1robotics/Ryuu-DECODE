@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Hood
 import org.firstinspires.ftc.teamcode.subsystems.Intake
 import org.firstinspires.ftc.teamcode.subsystems.Joint
 import org.firstinspires.ftc.teamcode.subsystems.Shooter
+import org.firstinspires.ftc.teamcode.subsystems.Turret
 import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
 
 @TeleOp
@@ -23,6 +24,8 @@ class AutoAimTesting : LinearOpMode() {
         @JvmField
         var intakePower = 0.0
         @JvmField
+        var turretPosition = 0.0
+        @JvmField
         var tuning = true
 
     }
@@ -34,6 +37,7 @@ class AutoAimTesting : LinearOpMode() {
         Joint.init(hardwareMap)
         Hood.init(hardwareMap)
         Intake.init(hardwareMap)
+        Turret.init(hardwareMap)
 
         Limelight.init(hardwareMap,0)
         Limelight.start()
@@ -50,6 +54,7 @@ class AutoAimTesting : LinearOpMode() {
             {
                 Shooter.setRPM(rpm)
                 Hood.setPosition(deg)
+                Turret.setPosition(turretPosition)
             }
             else
             {

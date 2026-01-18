@@ -150,7 +150,7 @@ class Teleop : LinearOpMode() {
     }
     var tx =0.0
     private fun handleInputTurret() {
-        Turret.setPosition(0.5)
+        Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,Colours.RED)
         //Turret.lock(tx)
     }
     override fun runOpMode() {

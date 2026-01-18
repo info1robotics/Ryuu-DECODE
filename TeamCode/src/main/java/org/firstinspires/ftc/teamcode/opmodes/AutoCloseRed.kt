@@ -31,7 +31,6 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0)) {
     private val shootSeq = serial(
         execute{
             Intake.stop()
-            Hood.setPosition(deg)
                 Shooter.setRPM(power)
                 actionQueue.add(100)
                 {
@@ -77,42 +76,42 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0)) {
             execute{ goTo(88.0,93.0,45.0)},//preload-1
             execute{Shooter.charge()},
             execute{Intake.setPowerMain(0.7)},
-            sleepms(1300),
+            sleepms(1000),
             shootSeq,
             sleepms(1100),
-            execute{ goTo(90.0,60.0,0.0)},//pre collect -2
+            execute{ goTo(90.0,62.5,0.0)},//pre collect -2
             preCollectSeq,
             sleepms(1000),
-            execute{ goTo(118.0,60.0,0.0)},//collect
-            sleepms(700),
+            execute{ goTo(118.0,62.5,0.0)},//collect
+            sleepms(900),
             afterCollectSeq,
             execute{Turret.setPosition(0.757)},
             execute{Shooter.charge()},
             sleepms(300),
-            execute{ goTo(85.0,80.0,0.0)},//shoot
-            sleepms(1200),
+            execute{ goTo(85.0,83.0,0.0)},//shoot
+            sleepms(1100),
             shootSeq,
 
-            sleepms(1200),
-            execute{ goTo(115.6,60.3,11.5)},//collect -3
-            sleepms(500),
+            sleepms(1000),
+            execute{ goTo(115.6,59.5,11.5)},//collect -3
+            sleepms(800),
             preCollectSeq,
-            execute{ goTo(126.0,60.3,11.5)},//push gate
+            execute{ goTo(126.0,59.5,11.5)},//push gate
             sleepms(2200),//wait at gate
             execute{Shooter.charge()},
-            execute{ goTo(85.0,80.0,0.0)},
+            execute{ goTo(85.0,83.0,0.0)},
             execute{Joint.setPosition(Joint.COLLECT_POSITION+0.2)},
             sleepms(1800),
             shootSeq,
 
             sleepms(1100),
-            execute{ goTo(115.6,60.3,11.5)},//collect -4
-            sleepms(500),
+            execute{ goTo(115.6,59.5,11.5)},//collect -4
+            sleepms(800),
             preCollectSeq,
-            execute{ goTo(126.0,60.3,11.5)},//push gate
+            execute{ goTo(126.0,59.5,11.5)},//push gate
             sleepms(3000),//wait at gate
             execute{Shooter.charge()},
-            execute{ goTo(85.0,79.0,0.0)},
+            execute{ goTo(85.0,83.0,0.0)},
             sleepms(1000),
             execute{Joint.setPosition(Joint.COLLECT_POSITION+0.2)},
             sleepms(800),
@@ -127,24 +126,24 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0)) {
             sleepms(750),
             afterCollectSeq,
             execute{Shooter.charge()},
-            execute{ goTo(85.0,80.0,0.0)},
+            execute{ goTo(85.0,83.0,0.0)},
             sleepms(950),
             shootSeq,
 
             sleepms(1100),
-            execute{ goTo(115.6,60.3,11.5)},//collect -6
-            sleepms(500),
+            execute{ goTo(115.6,59.5,11.5)},//collect -6
+            sleepms(800),
             preCollectSeq,
-            execute{ goTo(126.0,60.3,11.5)},//push gate
+            execute{ goTo(126.0,59.5,11.5)},//push gate
             sleepms(2000),//wait at gate
             execute{Shooter.charge()},
-            execute{ goTo(85.0,79.0,0.0)},
+            execute{ goTo(85.0,83.0,0.0)},
             sleepms(600),
             execute{Joint.setPosition(Joint.COLLECT_POSITION+0.2)},
             sleepms(1000),
             shootSeq,
 
-            sleepms(1100),
+            sleepms(900),
             execute{ goTo(85.0,70.0,0.0)},
 
 

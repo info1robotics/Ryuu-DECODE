@@ -87,11 +87,12 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
         distance = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
         power = Shooter.calculate(distance)
         deg = Hood.calculate(distance)
+        Hood.setPosition(deg)//TODO change to deg
         follower.update()
         log.add("@X", follower.pose.x)
         log.add("@Y", follower.pose.y)
         log.add("@Heading", Math.toDegrees(follower.pose.heading))
-        log.add("2 distance from"+allianceColour.toString()+"goal" + distance)
+        log.add("4 distance from"+allianceColour.toString()+"goal" + distance)
 
         task.tick()
         log.tick()

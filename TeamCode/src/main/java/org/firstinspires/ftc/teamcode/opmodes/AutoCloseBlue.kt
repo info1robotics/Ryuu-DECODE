@@ -34,7 +34,6 @@ class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))) {
     private val shootSeq = serial(
         execute {
             Intake.stop()
-            Hood.setPosition(deg)
             Shooter.setRPM(power)
             actionQueue.add(100) {
                 Wicket.setPosition(Wicket.OPEN_POSITION)
@@ -92,10 +91,10 @@ class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))) {
             sleepms(1400),
             shootSeq,
             sleepms(900),
-            execute { goTo(28.4, 62.4, 150.0) }, // collect -3
+            execute { goTo(28.4, 60.3, 156.0) }, // collect -3
             sleepms(800),
             preCollectSeq,
-            execute { goTo(12.5, 62.4, 150.0) }, // push gate
+            execute { goTo(11.5, 60.3, 156.0) }, // push gate
 
             sleepms(2200),
             execute { Shooter.charge() },
@@ -107,10 +106,10 @@ class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))) {
 
 
             sleepms(1100),
-            execute { goTo(28.4, 62.5, 150.0) }, // collect -4
+            execute { goTo(28.4, 60.3, 156.0) }, // collect -4
             sleepms(800),
             preCollectSeq,
-            execute { goTo(12.4, 62.5, 150.0) }, // push gate
+            execute { goTo(11.4, 60.3, 156.0) }, // push gate
             sleepms(3000),
             execute { Shooter.charge() },
             execute { goTo(59.0, 79.0, 180.0) },
@@ -134,10 +133,10 @@ class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))) {
 
 
             sleepms(1100),
-            execute { goTo(28.4, 62.5, 150.0) }, // collect -6
+            execute { goTo(28.4, 60.3, 156.0) }, // collect -6
             sleepms(800),
             preCollectSeq,
-            execute { goTo(12.4, 62.5, 150.0) }, // push gate
+            execute { goTo(11.4, 60.3, 156.0) }, // push gate
 
             sleepms(2000),
             execute { Shooter.charge() },

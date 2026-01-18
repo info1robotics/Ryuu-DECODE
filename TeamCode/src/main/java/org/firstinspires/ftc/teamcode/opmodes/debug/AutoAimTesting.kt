@@ -25,13 +25,10 @@ class AutoAimTesting : LinearOpMode() {
         @JvmField
         var tuning = true
 
-
-
-
     }
 
     private lateinit var log: Log
-
+    var achieved=false
     override fun runOpMode() {
         Shooter.init(hardwareMap)
         Joint.init(hardwareMap)
@@ -51,19 +48,13 @@ class AutoAimTesting : LinearOpMode() {
             Joint.setPosition(Joint.COLLECT_POSITION)
             if(tuning)
             {
-
                 Shooter.setRPM(rpm)
                 Hood.setPosition(deg)
             }
             else
             {
-                if (distanceLL != null) {
-                    Hood.setPosition(Hood.calculate(distanceLL))
-                }
-                if (distanceLL != null) {
-                    Shooter.setRPM(Shooter.calculate(distanceLL))
-                }
-
+                Hood.setPosition(Hood.calculate(distance))
+                Shooter.setRPM(Shooter.calculate(distance))
             }
             Intake.setPower(intakePower)
             log.add("if the tuning variable is true then you manually change the rpm and degrees" +
@@ -73,10 +64,14 @@ class AutoAimTesting : LinearOpMode() {
             log.add("Shooter Power", Shooter.getPower())
             log.add("Shooter RPM",Shooter.getRPM())
 
-
+            if(rpm-Shooter.getRPM()<=30)
+                achieved = true
+            else
+                achieved = false
 
             Limelight.getTx()?.let { log.add("tx", it) }
             Limelight.getTa()?.let { log.add("ta", it) }
+            log.add("Is velocity achieved:",achieved)
             log.add(distanceLL.toString())
             log.tick()
         }

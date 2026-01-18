@@ -27,9 +27,11 @@ object Controller {
     fun setInit()
     {
         Hood.setPositionDeg(40.0)
-        state = State.INIT
         Wicket.setPosition(Wicket.CLOSE_POSITION)
         Turret.setPosition(0.5)
+        Joint.setPosition(Joint.INIT_POSITION)
+        Wicket.setPosition(Wicket.CLOSE_POSITION)
+        state = State.INIT
     }
 
     fun setInitAuto()

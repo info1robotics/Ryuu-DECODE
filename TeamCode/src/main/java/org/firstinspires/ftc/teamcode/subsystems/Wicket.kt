@@ -10,21 +10,20 @@ object Wicket {
     var OPEN_POSITION = 0.4
     var CLOSE_POSITION = 0.78
 
-    private lateinit var servoJoint: ServoImplEx
+    private lateinit var servoWicket: ServoImplEx
 
     fun init(hardwareMap: HardwareMap) {
-        servoJoint = hardwareMap.get(ServoImplEx::class.java, "servoWicket")
-        servoJoint.direction = Servo.Direction.REVERSE
-        servoJoint.pwmRange = PwmRange(500.0, 2500.0)
-        servoJoint.position = CLOSE_POSITION
+        servoWicket = hardwareMap.get(ServoImplEx::class.java, "servoWicket")
+        servoWicket.direction = Servo.Direction.REVERSE
+        servoWicket.pwmRange = PwmRange(500.0, 2500.0)
     }
 
     fun setPosition(position: Double) {
-        servoJoint.position = position
+        servoWicket.position = position
     }
 
     fun getPosition(): Double {
-        return servoJoint.position
+        return servoWicket.position
     }
 
 

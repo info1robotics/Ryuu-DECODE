@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import org.firstinspires.ftc.teamcode.enums.Colours
 import org.firstinspires.ftc.teamcode.subsystems.Hood
 import org.firstinspires.ftc.teamcode.subsystems.Intake
 import org.firstinspires.ftc.teamcode.subsystems.Joint
@@ -68,27 +69,29 @@ class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))) {
 
     override fun onInit() {
         super.onInit()
+        allianceColour =  Colours.BLUE
+        far=false
 
         task = serial(
             execute { goTo(56.0, 93.0, 135.0) }, // preload-1 (144-88)
             execute { Shooter.charge() },
             execute { Intake.setPowerMain(0.7) },
-            sleepms(1100),
+            sleepms(1000),
             shootSeq,
 
-            sleepms(900),
+            sleepms(1100),
             execute { goTo(54.0, 58.3, 180.0) }, // pre collect -2
             preCollectSeq,
             sleepms(1000),
             execute { goTo(16.0, 58.3, 180.0) }, // collect
-            sleepms(1300),
+            sleepms(1000),
             afterCollectSeq,
 
             execute { Turret.setPosition(0.185) },
             execute { Shooter.charge() },
             sleepms(100),
             execute { goTo(59.0, 72.0, 180.0) }, // shoot
-            sleepms(1400),
+            sleepms(1300),
             shootSeq,
             sleepms(900),
             execute { goTo(28.4, 60.3, 156.0) }, // collect -3
@@ -133,7 +136,7 @@ class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))) {
 
 
             sleepms(1100),
-            execute { goTo(28.4, 60.3, 156.0) }, // collect -6
+            execute { goTo(28.4, 60.3, 156.0)  }, // collect -6
             sleepms(800),
             preCollectSeq,
             execute { goTo(11.4, 60.3, 156.0) }, // push gate

@@ -44,10 +44,12 @@ class Teleop : LinearOpMode() {
     private var distancePP = 0.0//distance got from odo
     private var distance = 0.0
     private var max = 250
+
     var forwardPower =0.0
     var strafePower = 0.0
-    var primaryRotationPower =0.0
+    var primaryRotationPower = 0.0
     var secondaryRotationPower = 0.0
+
     private fun handleInputDrivetrain()
     {
         forwardPower = gamepad1.corrected_left_stick_y().toDouble()
@@ -65,38 +67,24 @@ class Teleop : LinearOpMode() {
             Drivetrain.driveMecanum(forwardPower, strafePower, secondaryRotationPower, 1.0)
         else
             Drivetrain.driveMecanum(forwardPower, strafePower, primaryRotationPower, 1.0)
-
-
-        if(gamepad1.x)
-        {
-            follower = Constants.createFollower(hardwareMap)
-            follower.pose = Pose(120.0,123.0,32.0)
-
-        }
-        if(gamepad1.y)
-        {
-            follower = Constants.createFollower(hardwareMap)
-            follower.pose = Pose(24.0,123.0,138.0)
-
-        }
     }
     private fun handleInputIntake()
     {
         if(!transition)
         {
-                if(gamepad2.right_trigger+gamepad2.left_trigger>0)
-                    Joint.setPosition(Joint.COLLECT_POSITION)
-                else
-                    Joint.setPosition(Joint.INIT_POSITION)
 
-                Intake.setPowerSupport((gamepad2.right_trigger.toDouble())*(0.6))
-                Intake.setPowerMain(gamepad2.right_trigger.toDouble())
+            if(gamepad2.right_trigger+gamepad2.left_trigger>0)
+                Joint.setPosition(Joint.COLLECT_POSITION)
+            else
+                Joint.setPosition(Joint.INIT_POSITION)
 
-                if (gamepad2.left_trigger > 0.1 )
-                {
-                    Intake.reverse()
-                    empty = 1.0
-                }
+            Intake.setPowerSupport((gamepad2.right_trigger.toDouble())*(0.6))
+            Intake.setPowerMain(gamepad2.right_trigger.toDouble())
+            if (gamepad2.left_trigger > 0.1 )
+            {
+                Intake.reverse()
+                empty = 1.0
+            }
 
         }
     }
@@ -106,10 +94,8 @@ class Teleop : LinearOpMode() {
         if(gamepad2.dpad_down) Jack.setPosition(Jack.HIGHER_LIMIT)
     }
     var far = false
-    var power =0.0
+    var power = 0.0
     private fun handleInputShooter() {
-        if(gamepadEx2.getButtonDown("y"))
-            Shooter.charge()
 
         if(distance<max)
         {
@@ -123,7 +109,7 @@ class Teleop : LinearOpMode() {
                     {
                         Intake.setPowerMain(1.0)
                         Intake.setPowerSupport(1.0)
-                        actionQueue.add(1200)
+                        actionQueue.add(900)
                         {
                             Intake.stop()
                             Shooter.setRPM(0.0)
@@ -132,6 +118,29 @@ class Teleop : LinearOpMode() {
                             empty = 1.0
                         }
                     }
+            }
+        }
+        else
+        {
+            if(gamepadEx2.getButtonDown("a")) {
+                Intake.stop()
+                Shooter.setRPM(2900.0)
+                Hood.setPosition(0.68)
+                actionQueue.add(100) {
+                    Wicket.setPosition(Wicket.OPEN_POSITION)
+                    actionQueue.add(300) {
+                        Shooter.setRPM(2900.0)
+                        Intake.setPowerMain(1.0)
+                        Intake.setPowerSupport(0.65)
+                        actionQueue.add(400) {
+                            Shooter.setRPM(2900.0)
+                            actionQueue.add(1300) {
+                                Shooter.setRPM(0.0)
+                                Wicket.setPosition(Wicket.CLOSE_POSITION)
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -145,9 +154,6 @@ class Teleop : LinearOpMode() {
         //Turret.lock(tx)
     }
     override fun runOpMode() {
-        gamepadEx1 = GamepadEx(gamepad1)
-        gamepadEx2 = GamepadEx(gamepad2)
-
         Controller.init(hardwareMap)
         Pinpoint.init(hardwareMap)
 
@@ -158,10 +164,15 @@ class Teleop : LinearOpMode() {
         follower = Constants.createFollower(hardwareMap);
         follower.pose = startPose
 
-        Controller.setInit()
+
         empty=1.0
         log.tick()
         waitForStart()
+
+        while (gamepad1.atRest());
+        Controller.setInit()
+        gamepadEx1 = GamepadEx(gamepad1)
+        gamepadEx2 = GamepadEx(gamepad2)
 
         while (opModeIsActive() && !isStopRequested) {
 
@@ -178,13 +189,15 @@ class Teleop : LinearOpMode() {
 
             if(gamepad1.dpad_right) {
                 allianceColour = Colours.RED
-                startPose=AutoConstants.RED_TELE_POS
                 Limelight.allianceTag = AprilTags.RED
+                follower = Constants.createFollower(hardwareMap)
+                follower.pose = AutoConstants.RED_TELE_POS
             }
             else if(gamepad1.dpad_left) {
                 allianceColour = Colours.BLUE
-                startPose = AutoConstants.BLUE_TELE_POS
                 Limelight.allianceTag = AprilTags.BLUE
+                follower = Constants.createFollower(hardwareMap)
+                follower.pose = AutoConstants.BLUE_TELE_POS
             }
 
             power = Shooter.calculate(distance)

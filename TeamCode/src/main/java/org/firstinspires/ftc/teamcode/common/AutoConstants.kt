@@ -8,7 +8,7 @@ object AutoConstants {
     //TODO change the poses
     var BLUE_AUTO_POS :Pose= Pose()
     var RED_AUTO_POS :Pose= Pose()
-    var BLUE_TELE_POS :Pose= Pose()
+    var BLUE_TELE_POS :Pose= Pose(24.0,123.0,138.0)
     var RED_TELE_POS :Pose= Pose(120.0,123.0,32.0)
     var CENTER_POS: Pose = Pose(72.0,72.0,0.0)
 }

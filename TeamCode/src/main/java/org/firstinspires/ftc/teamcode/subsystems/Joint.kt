@@ -16,7 +16,6 @@ object Joint {
         servoJoint = hardwareMap.get(ServoImplEx::class.java, "servoJoint")
         servoJoint.direction = Servo.Direction.REVERSE
         servoJoint.pwmRange = PwmRange(500.0, 2500.0)
-        servoJoint.position = INIT_POSITION
     }
 
     fun setPosition(position: Double) {

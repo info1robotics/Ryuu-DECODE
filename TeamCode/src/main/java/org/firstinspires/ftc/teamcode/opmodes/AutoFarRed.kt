@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import org.firstinspires.ftc.teamcode.enums.Colours
 import org.firstinspires.ftc.teamcode.subsystems.Hood
 import org.firstinspires.ftc.teamcode.subsystems.Intake
 import org.firstinspires.ftc.teamcode.subsystems.Joint
@@ -69,7 +70,8 @@ class AutoFarRed : AutoBase(Pose(72.0, 72.0, Math.toRadians(0.0))) {
 
     override fun onInit() {
         super.onInit()
-
+        allianceColour=  Colours.RED
+        far=true
         task = serial(
             sleepms(20000),
             execute{Wicket.setPosition(Wicket.CLOSE_POSITION)},

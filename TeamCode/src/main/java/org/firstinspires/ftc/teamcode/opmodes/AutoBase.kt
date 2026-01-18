@@ -24,7 +24,8 @@ import org.openftc.easyopencv.OpenCvPipeline
 
 abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadians(0.0))) : LinearOpMode() {
 
-    var allianceColour:Colours = Colours.RED
+    var allianceColour:Colours = Colours.RED//TODO verify between matches
+    var far = false//play far or near
     lateinit var gamepadEx1: GamepadEx
 
     lateinit var follower: Follower
@@ -87,7 +88,10 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
         distance = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
         power = Shooter.calculate(distance)
         deg = Hood.calculate(distance)
-        Hood.setPosition(deg)//TODO change to deg
+        if(!far)
+            Hood.setPosition(deg)
+        else
+            Hood.setPosition(Hood.HIGHER_LIMIT)
         follower.update()
         log.add("@X", follower.pose.x)
         log.add("@Y", follower.pose.y)

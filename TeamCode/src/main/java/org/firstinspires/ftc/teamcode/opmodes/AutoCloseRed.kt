@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import org.firstinspires.ftc.teamcode.enums.Colours
 import org.firstinspires.ftc.teamcode.subsystems.Hood
 import org.firstinspires.ftc.teamcode.subsystems.Intake
 import org.firstinspires.ftc.teamcode.subsystems.Joint
@@ -69,8 +70,8 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0)) {
 
     override fun onInit(){
         super.onInit()
-        //allianceColour=  Colours.RED//TODO change for each auto
-
+        allianceColour =  Colours.RED
+        far=false
 
         task = serial(
             execute{ goTo(88.0,93.0,45.0)},//preload-1

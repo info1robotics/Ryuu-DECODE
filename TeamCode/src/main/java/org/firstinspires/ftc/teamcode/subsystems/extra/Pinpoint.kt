@@ -28,4 +28,8 @@ object Pinpoint {
                     (goalY - currentY).pow(2)
         )- offset
     }
+    fun delay(distance:Double)
+    {
+
+    }
 }

@@ -22,9 +22,8 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.openftc.easyopencv.OpenCvCamera
 import org.openftc.easyopencv.OpenCvPipeline
 
-abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadians(0.0))) : LinearOpMode() {
+abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadians(0.0)),private val allianceColour:Colours) : LinearOpMode() {
 
-    var allianceColour:Colours = Colours.RED//TODO verify between matches
     var far = false//play far or near
     lateinit var gamepadEx1: GamepadEx
 

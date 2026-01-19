@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.hardware.DistanceSensor
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 
@@ -12,13 +13,13 @@ object Intake {
 
     lateinit var motorIntakeMain:DcMotor
     lateinit var motorIntakeSupport:DcMotor
-    private lateinit var sensorIntake: RevColorSensorV3
+    //private lateinit var sensorIntake: DistanceSensor
 
     fun init(hardwareMap: HardwareMap) {
         motorIntakeMain = hardwareMap.get(DcMotor::class.java, "motorIntakeMain")
         motorIntakeSupport = hardwareMap.get(DcMotor::class.java, "motorIntakeSupport")
 
-        sensorIntake = hardwareMap.get(RevColorSensorV3::class.java, "sensorIntake")
+        //sensorIntake = hardwareMap.get(DistanceSensor::class.java, "sensorIntake")
 
         motorIntakeMain.direction = DcMotorSimple.Direction.FORWARD
         motorIntakeSupport.direction = DcMotorSimple.Direction.REVERSE
@@ -72,17 +73,13 @@ object Intake {
         motorIntakeSupport.power = 1.0
 
     }
-
-
-    fun getColorReading(): Triple<Int, Int, Int> {
-        // Return red, green, and blue as a Triple
-        return Triple(sensorIntake.red(), sensorIntake.green(), sensorIntake.blue())
+    /*
+    fun isEmpty(): Boolean {
+        val distance = sensorIntake.getDistance(DistanceUnit.CM)
+        return distance.isNaN() || distance > 7.0
     }
 
-    fun isEmpty():Boolean{
-        val (r, g, b) = getColorReading()
-        return r in 15..70 && g in 15..80 && b in 15..60//TODO tune
-    }
+     */
 
 
 

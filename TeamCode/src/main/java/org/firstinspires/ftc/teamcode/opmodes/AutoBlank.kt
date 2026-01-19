@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepuntil
 
 @Autonomous
 
-class AutoBlank : AutoBase(Pose(0.0,0.0, Math.toRadians(0.0))) {
+class AutoBlank : AutoBase(Pose(0.0,0.0, Math.toRadians(0.0)),Colours.RED) {
 
     fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
         val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))
@@ -38,7 +38,6 @@ class AutoBlank : AutoBase(Pose(0.0,0.0, Math.toRadians(0.0))) {
     
     override fun onInit(){
         super.onInit()
-        allianceColour=  Colours.RED//TODO change for each auto
         task = serial(
             execute{ goTo(0.0,0.0,0.0) },//middle of the field
             sleepms(200),//wait for the previous action to stop

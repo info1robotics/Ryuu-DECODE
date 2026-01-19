@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepuntil
 import kotlin.math.absoluteValue
 
 @TeleOp
-class Teleop : LinearOpMode() {
+class TeleopSolo : LinearOpMode() {
 
     fun Gamepad.corrected_left_stick_y(): Float = -this.left_stick_y
 
@@ -56,16 +56,6 @@ class Teleop : LinearOpMode() {
         strafePower =  gamepad1.left_stick_x.toDouble()
         primaryRotationPower = (gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble())
 
-        secondaryRotationPower = if(gamepad1.right_bumper)
-            0.2
-        else if(gamepad1.left_bumper)
-            -0.2
-        else
-            0.0
-
-        if(primaryRotationPower==0.0)
-            Drivetrain.driveMecanum(forwardPower, strafePower, secondaryRotationPower, 1.0)
-        else
             Drivetrain.driveMecanum(forwardPower, strafePower, primaryRotationPower, 1.0)
     }
     private fun handleInputIntake()
@@ -81,21 +71,24 @@ class Teleop : LinearOpMode() {
 
              */
 
-
-
-            if (gamepad2.left_trigger > 0.1 )
+            if (gamepad1.left_bumper )
             {
                 Intake.reverse()
                 empty = 1.0
             }
             else
             {
-                Intake.setPowerMain(gamepad2.right_trigger.toDouble())
-                Intake.setPowerSupport((gamepad2.right_trigger.toDouble())*(0.6))
+                if(gamepad1.right_bumper)
+                {
+                    Intake.setPowerMain(1.0)
+                    Intake.setPowerSupport(0.7)
+                }
+                else
+                {
+                    Intake.stop()
+                }
             }
-            if(gamepad2.right_bumper)
-                Joint.setPosition(Joint.COLLECT_POSITION+0.1)
-            else if(gamepad2.right_trigger+gamepad2.left_trigger>0)
+            if(gamepad1.right_bumper)
                 Joint.setPosition(Joint.COLLECT_POSITION)
             else
                 Joint.setPosition(Joint.INIT_POSITION)
@@ -103,8 +96,8 @@ class Teleop : LinearOpMode() {
     }
     private fun handleInputJack()
     {
-        if(gamepad2.dpad_up) Jack.setPosition(Jack.LOWER_LIMIT)
-        if(gamepad2.dpad_down) Jack.setPosition(Jack.HIGHER_LIMIT)
+        if(gamepad1.dpad_up) Jack.setPosition(Jack.LOWER_LIMIT)
+        if(gamepad1.dpad_down) Jack.setPosition(Jack.HIGHER_LIMIT)
     }
     var far = false
     var power = 0.0
@@ -112,31 +105,30 @@ class Teleop : LinearOpMode() {
 
         if(distance<max)
         {
-
             far = false
             Hood.setPosition(Hood.calculate(distance))
-            if(gamepadEx2.getButtonDown("a"))
+            if(gamepadEx1.getButtonDown("a"))
             {
                 Wicket.setPosition(Wicket.OPEN_POSITION)
                 transition=true
                 actionQueue.add(900)//if this doesn t work 1200
+                {
+                    Intake.setPowerMain(1.0)
+                    Intake.setPowerSupport(1.0)
+                    actionQueue.add(800)
                     {
-                        Intake.setPowerMain(1.0)
-                        Intake.setPowerSupport(1.0)
-                        actionQueue.add(700)
-                        {
-                            Intake.stop()
-                            Shooter.setRPM(0.0)
-                            Wicket.setPosition(Wicket.CLOSE_POSITION)
-                            transition = false
-                            empty = 1.0
-                        }
+                        Intake.stop()
+                        Shooter.setRPM(0.0)
+                        Wicket.setPosition(Wicket.CLOSE_POSITION)
+                        transition = false
+                        empty = 1.0
                     }
+                }
             }
         }
         else
         {
-            if(gamepadEx2.getButtonDown("a")) {
+            if(gamepadEx1.getButtonDown("a")) {
                 Intake.stop()
                 Shooter.setRPM(2900.0)
                 Hood.setPosition(0.68)
@@ -157,16 +149,17 @@ class Teleop : LinearOpMode() {
                 }
             }
         }
-
         if(transition)
             Shooter.setRPM(power)
 
     }
-    var tx = 0.0
+    var tx =0.0
     private fun handleInputTurret() {
+
         Turret.setPosition(Turret.FORWARD_POSITION)
+
         //Turret.setPosition(Turret.FORWARD_POSITION)
-    }
+
     override fun runOpMode() {
         Controller.init(hardwareMap)
         Pinpoint.init(hardwareMap)

@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
 
 @Autonomous
-class AutoFarRed : AutoBase(Pose(72.0, 72.0, Math.toRadians(0.0))) {
+class AutoFarRed : AutoBase(Pose(72.0, 72.0, Math.toRadians(0.0)),Colours.RED) {
 
     fun turnTo(degrees: Double) {
         val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))
@@ -70,7 +70,6 @@ class AutoFarRed : AutoBase(Pose(72.0, 72.0, Math.toRadians(0.0))) {
 
     override fun onInit() {
         super.onInit()
-        allianceColour=  Colours.RED
         far=true
         task = serial(
             sleepms(20000),

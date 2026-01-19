@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
 
 @Autonomous
-class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))) {
+class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Colours.BLUE) {
 
     fun turnTo(degrees: Double) {
         val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))
@@ -69,7 +69,6 @@ class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))) {
 
     override fun onInit() {
         super.onInit()
-        allianceColour =  Colours.BLUE
         far=false
 
         task = serial(
@@ -78,20 +77,18 @@ class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))) {
             execute { Intake.setPowerMain(0.7) },
             sleepms(1000),
             shootSeq,
-
             sleepms(1100),
             execute { goTo(54.0, 58.3, 180.0) }, // pre collect -2
             preCollectSeq,
             sleepms(1000),
-            execute { goTo(16.0, 58.3, 180.0) }, // collect
-            sleepms(1000),
+            execute { goTo(19.0, 58.3, 180.0) }, // collect
+            sleepms(900),
             afterCollectSeq,
-
             execute { Turret.setPosition(0.185) },
             execute { Shooter.charge() },
-            sleepms(100),
+            sleepms(300),
             execute { goTo(59.0, 72.0, 180.0) }, // shoot
-            sleepms(1300),
+            sleepms(1100),
             shootSeq,
             sleepms(900),
             execute { goTo(28.4, 60.3, 156.0) }, // collect -3
@@ -149,8 +146,8 @@ class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))) {
             sleepms(1000),
             shootSeq,
 
-            sleepms(1100),
-            execute { goTo(59.0, 70.0, 180.0) },
+            sleepms(800),
+            execute { goTo(59.0, 65.0, 180.0) },
 
             sleepms(999999999)
         )

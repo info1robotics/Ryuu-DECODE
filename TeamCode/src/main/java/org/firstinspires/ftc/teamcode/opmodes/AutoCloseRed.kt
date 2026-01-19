@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
 
 @Autonomous
-class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0)) {
+class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
     fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
         val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))
         follower.holdPoint(temp)
@@ -70,7 +70,6 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0)) {
 
     override fun onInit(){
         super.onInit()
-        allianceColour =  Colours.RED
         far=false
 
         task = serial(

@@ -110,6 +110,6 @@ object Shooter {
     }
     fun charge()
     {
-        setRPM(1600.0)
+        setRPM(1840.0)
     }
 }

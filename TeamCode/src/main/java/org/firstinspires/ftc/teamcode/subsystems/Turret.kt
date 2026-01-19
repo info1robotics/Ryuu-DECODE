@@ -12,8 +12,8 @@ import kotlin.math.atan2
 object Turret {
 
     var offset = 0.0
-    var HIGHER_LIMIT = 1.0//170 turning right
-    var LOWER_LIMIT = 0.0//170 turing left
+    var HIGHER_LIMIT = 1.0//85 turning right
+    var LOWER_LIMIT = 0.0//85 turing left
     var FORWARD_POSITION = 0.5//0 degrees
 
     private lateinit var servoTurret: ServoImplEx//axon mini mk2 gear ratio 24-50
@@ -31,9 +31,21 @@ object Turret {
     fun getPosition(): Double {
         return servoTurret.position
     }
+    fun hold()
+    {
+        setPosition(getPosition())
+    }
 
     var targetX = 0.0
     var targetY = 0.0
+
+    private val MAX_TURRET_ANGLE = Math.toRadians(85.0)
+    private val DEADZONE = Math.toRadians(1.0)     // 1 degree
+    private const val ALPHA = 0.15                       // smoothing factor
+    private val BACKLASH_COMP = Math.toRadians(0.8)
+
+    private var filteredServo = FORWARD_POSITION
+    private var lastTurretAngle = 0.0
 
     fun lockToTarget(
         robotX: Double,
@@ -44,13 +56,13 @@ object Turret {
 
         if(allianceColour == Colours.BLUE)
         {
-            targetX = Pinpoint.BLUE_GOAL_X
-            targetY = Pinpoint.BLUE_GOAL_Y
+            targetX = 130.0
+            targetY = 14.0
         }
         else
         {
-            targetX = Pinpoint.RED_GOAL_X
-            targetY = Pinpoint.RED_GOAL_Y
+            targetX = 130.0
+            targetY = 130.0
 
         }
 
@@ -67,12 +79,13 @@ object Turret {
 
         // Convert to servo position
         val servoPosition =(
-            FORWARD_POSITION +
-                    (turretAngle / PI) * 0.85 +
-                    offset).coerceIn(-1.0,1.0)
+                FORWARD_POSITION +
+                        (turretAngle / PI) * 0.95 +
+                        offset).coerceIn(-0.95,0.95)
 
-        setPosition(servoPosition.coerceIn(-1.0,1.0))
+        setPosition(servoPosition)
     }
+
 
 
 }

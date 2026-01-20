@@ -157,7 +157,7 @@ class TeleopSolo : LinearOpMode() {
     private fun handleInputTurret() {
 
         Turret.setPosition(Turret.FORWARD_POSITION)
-
+    }
         //Turret.setPosition(Turret.FORWARD_POSITION)
 
     override fun runOpMode() {

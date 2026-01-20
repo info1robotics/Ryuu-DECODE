@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.common.AutoUtil.p
 import org.firstinspires.ftc.teamcode.common.AutoUtil.rad
 import org.firstinspires.ftc.teamcode.enums.Colours
@@ -17,7 +18,7 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepuntil
 
 @Autonomous
-
+@Disabled
 class AutoBlank : AutoBase(Pose(0.0,0.0, Math.toRadians(0.0)),Colours.RED) {
 
     fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees

@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.enums.Colours
 import org.firstinspires.ftc.teamcode.subsystems.Hood
 import org.firstinspires.ftc.teamcode.subsystems.Intake
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Wicket
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.execute
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
-
+@Disabled
 @Autonomous
 class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
     fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
@@ -79,10 +80,10 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             sleepms(1000),
             shootSeq,
             sleepms(1100),
-            execute{ goTo(90.0,62.5,0.0)},//pre collect -2
+            execute{ goTo(90.0,62.0,0.0)},//pre collect -2
             preCollectSeq,
             sleepms(1000),
-            execute{ goTo(118.0,62.5,0.0)},//collect
+            execute{ goTo(115.0,62.0,0.0)},//collect
             sleepms(900),
             afterCollectSeq,
             execute{Turret.setPosition(0.757)},
@@ -90,13 +91,13 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             sleepms(300),
             execute{ goTo(85.0,83.0,0.0)},//shoot
             sleepms(1100),
-            shootSeq,
+            shootSeq,//TODO calibrate the gate position y
 
             sleepms(1000),
-            execute{ goTo(115.6,59.5,11.5)},//collect -3
+            execute{ goTo(115.6,60.0,11.5)},//collect -3
             sleepms(800),
             preCollectSeq,
-            execute{ goTo(126.0,59.5,11.5)},//push gate
+            execute{ goTo(126.0,60.0,11.5)},//push gate
             sleepms(2200),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},
@@ -105,10 +106,10 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             shootSeq,
 
             sleepms(1100),
-            execute{ goTo(115.6,59.5,11.5)},//collect -4
+            execute{ goTo(115.6,60.0,11.5)},//collect -4
             sleepms(800),
             preCollectSeq,
-            execute{ goTo(126.0,59.5,11.5)},//push gate
+            execute{ goTo(126.0,60.0,11.5)},//push gate
             sleepms(3000),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},
@@ -131,10 +132,10 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             shootSeq,
 
             sleepms(1100),
-            execute{ goTo(115.6,59.5,11.5)},//collect -6
+            execute{ goTo(115.6,60.0,11.5)},//collect -6
             sleepms(800),
             preCollectSeq,
-            execute{ goTo(126.0,59.5,11.5)},//push gate
+            execute{ goTo(126.0,60.0,11.5)},//push gate
             sleepms(2000),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},

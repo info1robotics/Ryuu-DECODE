@@ -80,7 +80,7 @@ class AutoFarBlue : AutoBase(Pose(54.0, 9.0, Math.toRadians(90.0)),Colours.BLUE)
         task = serial(
             execute { Wicket.setPosition(Wicket.CLOSE_POSITION) }, // preload -1
             charge,
-            execute { Turret.setPosition(0.365) },
+            execute { Turret.setPosition(0.635) },
 
             execute { goTo(54.0, 16.0, 90.0) },
             sleepms(1200),

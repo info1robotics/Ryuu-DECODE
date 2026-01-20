@@ -119,11 +119,11 @@ class Teleop : LinearOpMode() {
             {
                 Wicket.setPosition(Wicket.OPEN_POSITION)
                 transition=true
-                actionQueue.add(900)//if this doesn t work 1200
+                actionQueue.add(1100)//if this doesn t work 1200
                     {
                         Intake.setPowerMain(1.0)
                         Intake.setPowerSupport(1.0)
-                        actionQueue.add(700)
+                        actionQueue.add(1100)
                         {
                             Intake.stop()
                             Shooter.setRPM(0.0)
@@ -134,30 +134,6 @@ class Teleop : LinearOpMode() {
                     }
             }
         }
-        else
-        {
-            if(gamepadEx2.getButtonDown("a")) {
-                Intake.stop()
-                Shooter.setRPM(2900.0)
-                Hood.setPosition(0.68)
-                actionQueue.add(100) {
-                    Wicket.setPosition(Wicket.OPEN_POSITION)
-                    actionQueue.add(300) {
-                        Shooter.setRPM(2900.0)
-                        Intake.setPowerMain(1.0)
-                        Intake.setPowerSupport(0.65)
-                        actionQueue.add(400) {
-                            Shooter.setRPM(2900.0)
-                            actionQueue.add(1300) {
-                                Shooter.setRPM(0.0)
-                                Wicket.setPosition(Wicket.CLOSE_POSITION)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         if(transition)
             Shooter.setRPM(power)
 

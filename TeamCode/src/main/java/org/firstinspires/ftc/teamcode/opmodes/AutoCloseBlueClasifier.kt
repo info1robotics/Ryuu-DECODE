@@ -4,7 +4,6 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.enums.Colours
 import org.firstinspires.ftc.teamcode.subsystems.Hood
 import org.firstinspires.ftc.teamcode.subsystems.Intake
@@ -15,9 +14,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Wicket
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.execute
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
-@Disabled
+
 @Autonomous
-class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Colours.BLUE) {
+class AutoCloseBlueClasifier : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Colours.BLUE) {
 
     fun turnTo(degrees: Double) {
         val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))
@@ -135,19 +134,22 @@ class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Colours.
 
             sleepms(1100),
             execute { goTo(28.4, 60.3, 156.0)  }, // collect -6
-            sleepms(800),
+            preCollectSeq,
+            sleepms(1900),
             preCollectSeq,
             execute { goTo(11.4, 60.3, 156.0) }, // push gate
-
-            sleepms(2000),
-            execute { Shooter.charge() },
+            sleepms(700),
+            afterCollectSeq,
             execute { goTo(59.0, 79.0, 180.0) },
-            sleepms(600),
-            execute { Joint.setPosition(Joint.COLLECT_POSITION + 0.1) },
-            sleepms(1000),
+            sleepms(100),
+            execute{Joint.setPosition(Joint.COLLECT_POSITION+0.1)},
+            sleepms(1100),
+            execute{Shooter.charge()},
+            execute{Joint.setPosition(Joint.COLLECT_POSITION)},
+            sleepms(400),
             shootSeq,
 
-            sleepms(800),
+            sleepms(900),
             execute { goTo(59.0, 65.0, 180.0) },
 
             sleepms(999999999)

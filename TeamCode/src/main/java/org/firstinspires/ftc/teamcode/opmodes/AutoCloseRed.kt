@@ -83,7 +83,7 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             execute{ goTo(90.0,62.0,0.0)},//pre collect -2
             preCollectSeq,
             sleepms(1000),
-            execute{ goTo(115.0,62.0,0.0)},//collect
+            execute{ goTo(117.0,62.0,0.0)},//collect
             sleepms(900),
             afterCollectSeq,
             execute{Turret.setPosition(0.757)},
@@ -93,29 +93,34 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             sleepms(1100),
             shootSeq,//TODO calibrate the gate position y
 
-            sleepms(1000),
-            execute{ goTo(115.6,60.0,11.5)},//collect -3
-            sleepms(800),
+            sleepms(1100),
+            execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
+            execute{ goTo(103.0,61.5,0.0)},//
+            sleepms(1300),
+            execute{ goTo(122.6,61.5,0.0)},//collect -3
             preCollectSeq,
-            execute{ goTo(126.0,60.0,11.5)},//push gate
-            sleepms(2200),//wait at gate
+            sleepms(700),
+            execute{ goTo(125.0,58.0,16.0)},//push gate
+            sleepms(1800),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},
-            execute{Joint.setPosition(Joint.COLLECT_POSITION+0.2)},
-            sleepms(1800),
+            execute{Joint.setPosition(Joint.COLLECT_POSITION+0.1)},
+            sleepms(1100),
             shootSeq,
 
             sleepms(1100),
-            execute{ goTo(115.6,60.0,11.5)},//collect -4
-            sleepms(800),
+            execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
+            execute{ goTo(103.0,61.5,0.0)},//
+            sleepms(1300),
+            execute{ goTo(122.6,61.5,0.0)},//collect -4
             preCollectSeq,
-            execute{ goTo(126.0,60.0,11.5)},//push gate
-            sleepms(3000),//wait at gate
+            sleepms(700),
+            execute{ goTo(125.0,58.0,16.0)},//push gate
+            sleepms(1800),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},
-            sleepms(1000),
-            execute{Joint.setPosition(Joint.COLLECT_POSITION+0.2)},
-            sleepms(800),
+            execute{Joint.setPosition(Joint.COLLECT_POSITION+0.1)},
+            sleepms(1100),
             shootSeq,
 
             sleepms(1100),
@@ -132,16 +137,18 @@ class AutoCloseRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             shootSeq,
 
             sleepms(1100),
-            execute{ goTo(115.6,60.0,11.5)},//collect -6
-            sleepms(800),
+            execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
+            execute{ goTo(103.0,61.5,0.0)},//
+            sleepms(1300),
+            execute{ goTo(122.6,61.5,0.0)},//collect -6
             preCollectSeq,
-            execute{ goTo(126.0,60.0,11.5)},//push gate
-            sleepms(2000),//wait at gate
+            sleepms(700),
+            execute{ goTo(125.0,58.0,16.0)},//push gate
+            sleepms(1800),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},
-            sleepms(600),
-            execute{Joint.setPosition(Joint.COLLECT_POSITION+0.2)},
-            sleepms(1000),
+            execute{Joint.setPosition(Joint.COLLECT_POSITION+0.1)},
+            sleepms(1100),
             shootSeq,
 
             sleepms(900),

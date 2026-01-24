@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
 
 @Autonomous
 
-class AutoDebug : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
+class AutoDebugRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
 
     fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
         val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))
@@ -69,17 +69,18 @@ class AutoDebug : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
 
         task = serial(
             execute{ goTo(88.0,93.0,45.0)},//preload-1
+            execute{Shooter.charge()},
             execute{Intake.setPowerMain(0.7)},
             sleepms(1300),
             shootSeq,
             sleepms(650),
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
-            execute{ goTo(98.0,83.6,0.0)},//pre collect -2x§x   x
-            sleepms(1100),
-            execute{ goTo(115.6,60.8,11.0)},//collect -5
-            sleepms(500),
+            execute{ goTo(103.0,62.5,0.0)},//
+            sleepms(1300),
+            execute{ goTo(122.6,62.5,0.0)},//collect
+            sleepms(900),
             preCollectSeq,
-            execute{ goTo(126.0,60.8,11.0)},//push gate
+            execute{ goTo(123.0,60.5,12.0)},//push gate
 
 
 

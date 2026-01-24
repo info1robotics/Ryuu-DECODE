@@ -36,9 +36,11 @@ class IntakeTesting : LinearOpMode() {
             Intake.setPowerMain(mainPower)
             Intake.setPowerSupport(supportPower)
             Joint.setPosition(position)
+
+
             log.add("Intake Power",Intake.motorIntakeMain.power)
             //log.add("Sensor colours", Intake.getColorReading())
-            //log.add("Is empty",Intake.isEmpty())
+            log.add("Is empty",Intake.isEmpty())
             log.tick()
         }
     }

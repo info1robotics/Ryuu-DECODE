@@ -49,6 +49,7 @@ class TeleopSolo : LinearOpMode() {
     var strafePower = 0.0
     var primaryRotationPower = 0.0
     var secondaryRotationPower = 0.0
+    var delay = 0L
 
     private fun handleInputDrivetrain()
     {
@@ -111,40 +112,17 @@ class TeleopSolo : LinearOpMode() {
             {
                 Wicket.setPosition(Wicket.OPEN_POSITION)
                 transition=true
-                actionQueue.add(900)//if this doesn t work 1200
+                actionQueue.add(delay)//if this doesn t work 1200
                 {
                     Intake.setPowerMain(1.0)
                     Intake.setPowerSupport(1.0)
-                    actionQueue.add(800)
+                    actionQueue.add(1100)
                     {
                         Intake.stop()
                         Shooter.setRPM(0.0)
                         Wicket.setPosition(Wicket.CLOSE_POSITION)
                         transition = false
                         empty = 1.0
-                    }
-                }
-            }
-        }
-        else
-        {
-            if(gamepadEx1.getButtonDown("a")) {
-                Intake.stop()
-                Shooter.setRPM(2900.0)
-                Hood.setPosition(0.68)
-                actionQueue.add(100) {
-                    Wicket.setPosition(Wicket.OPEN_POSITION)
-                    actionQueue.add(300) {
-                        Shooter.setRPM(2900.0)
-                        Intake.setPowerMain(1.0)
-                        Intake.setPowerSupport(0.65)
-                        actionQueue.add(400) {
-                            Shooter.setRPM(2900.0)
-                            actionQueue.add(1300) {
-                                Shooter.setRPM(0.0)
-                                Wicket.setPosition(Wicket.CLOSE_POSITION)
-                            }
-                        }
                     }
                 }
             }
@@ -208,6 +186,11 @@ class TeleopSolo : LinearOpMode() {
             }
 
             power = Shooter.calculate(distance)
+
+            delay = if(distance<=108) 700
+            else if(distance>108 && distance<166) 900
+            else 1100
+
             var ta = Limelight.getTa()
             var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }
             distancePP = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)

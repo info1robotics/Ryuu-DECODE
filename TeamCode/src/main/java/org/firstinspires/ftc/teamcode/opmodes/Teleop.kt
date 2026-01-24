@@ -49,6 +49,7 @@ class Teleop : LinearOpMode() {
     var strafePower = 0.0
     var primaryRotationPower = 0.0
     var secondaryRotationPower = 0.0
+    var delay = 0L
 
     private fun handleInputDrivetrain()
     {
@@ -72,16 +73,12 @@ class Teleop : LinearOpMode() {
     {
         if(!transition)
         {
-            /*
+
             if(!Intake.isEmpty())
             {
                 gamepad1.rumbleBlips(1)
                 gamepad2.rumbleBlips(1)
             }
-
-             */
-
-
 
             if (gamepad2.left_trigger > 0.1 )
             {
@@ -119,7 +116,7 @@ class Teleop : LinearOpMode() {
             {
                 Wicket.setPosition(Wicket.OPEN_POSITION)
                 transition=true
-                actionQueue.add(1100)//if this doesn t work 1200
+                actionQueue.add(delay)//if this doesn t work 1200
                     {
                         Intake.setPowerMain(1.0)
                         Intake.setPowerSupport(1.0)
@@ -196,13 +193,17 @@ class Teleop : LinearOpMode() {
             distancePP = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
             distance = distancePP//change distance method
 
+            delay = if(distance<=108) 700
+            else if(distance>108 && distance<166) 900
+            else 1100
+
             log.add("choose alliance colour RED/BLUE by dpad left/right",allianceColour.toString())
             Limelight.getTx()?.let { log.add("tx", it) }
             Limelight.getTa()?.let  { log.add("ta", it) }
             //tx= Limelight.getTx()!!
             log.add("distanceLL $distanceLL")
             log.add("distancePP $distancePP")
-            //log.add("is empty",Intake.isEmpty())
+            log.add("is empty",Intake.isEmpty())
             //log.add("rgb",Intake.getColorReading())
             log.add("@X", follower.pose.x)
             log.add("@Y", follower.pose.y)

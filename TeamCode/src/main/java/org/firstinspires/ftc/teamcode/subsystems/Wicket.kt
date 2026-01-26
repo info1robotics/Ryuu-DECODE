@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.ServoImplEx
 
 object Wicket {
 
-    var OPEN_POSITION = 0.4
-    var CLOSE_POSITION = 0.78
+    var OPEN_POSITION = 0.5
+    var CLOSE_POSITION = 0.8
 
     private lateinit var servoWicket: ServoImplEx
 

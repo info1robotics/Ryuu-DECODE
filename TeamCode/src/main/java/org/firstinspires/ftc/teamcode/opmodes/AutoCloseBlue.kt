@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.subsystems.Wicket
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.execute
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
-@Disabled
 @Autonomous
 class AutoCloseBlue : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Colours.BLUE) {
 

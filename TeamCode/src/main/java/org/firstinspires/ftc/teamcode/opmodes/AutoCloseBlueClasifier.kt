@@ -72,23 +72,23 @@ class AutoCloseBlueClasifier : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))
         far=false
 
         task = serial(
-            execute { goTo(56.0, 93.0, 133.0) }, // preload-1 (144-88)
+            execute { goTo(56.0, 93.0, 138.0) }, // preload-1 (144-88)
             execute { Shooter.charge() },
             execute { Intake.setPowerMain(0.7) },
-            sleepms(900),
+            sleepms(1200),
             shootSeq,
             sleepms(1000),
 
-            execute { goTo(54.0, 58.3, 180.0) }, // pre collect -2
+            execute { goTo(54.0, 59.2, 180.0) }, // pre collect -2
             preCollectSeq,
             sleepms(1000),
-            execute { goTo(19.0, 58.3, 180.0) }, // collect
+            execute { goTo(23.0, 59.2, 180.0) }, // collect
             sleepms(1000),
+            execute { Turret.setPosition(0.2) },
             afterCollectSeq,
-            execute { Turret.setPosition(0.185) },
             execute { Shooter.charge() },
             sleepms(300),
-            execute { goTo(59.0, 72.0, 180.0) }, // shoot
+            execute { goTo(59.0, 79.0, 180.0) },
             sleepms(1200),
             shootSeq,//TODO
 
@@ -99,13 +99,12 @@ class AutoCloseBlueClasifier : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))
             execute { goTo(19.4, 61.5, 180.0) },
             preCollectSeq,
             sleepms(700),
-            execute { goTo(14.8, 58.0, 153.0) }, // push gate
-            sleepms(1800),
+            execute { goTo(10.8, 56.0, 150.0) }, // push gate
+            sleepms(1500),
             execute { Shooter.charge() },
-            execute { Turret.setPosition(0.21) },
-            execute { goTo(59.0, 72.0, 180.0) },
+            execute { goTo(59.0, 79.0, 180.0) },
             execute { Joint.setPosition(Joint.COLLECT_POSITION + 0.1) },
-            sleepms(1100),
+            sleepms(1300),
             shootSeq,
 
 
@@ -119,7 +118,7 @@ class AutoCloseBlueClasifier : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))
             sleepms(750),
             afterCollectSeq,
             execute { Shooter.charge() },
-            execute { goTo(59.0, 80.0, 180.0) },
+            execute { goTo(59.0, 79.0, 180.0) },
             sleepms(1200),
             shootSeq,
 
@@ -130,20 +129,20 @@ class AutoCloseBlueClasifier : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))
             execute { goTo(19.4, 61.5, 180.0) },
             preCollectSeq,
             sleepms(700),
-            execute { goTo(14.8, 58.0, 153.0) }, // push gate
-            sleepms(1800),
+            execute { goTo(10.8, 56.0, 150.0) }, // push gate
+            sleepms(1500),
             execute { Shooter.charge() },
             execute { goTo(59.0, 79.0, 180.0) },
             execute { Joint.setPosition(Joint.COLLECT_POSITION + 0.1) },
-            sleepms(1200),
+            sleepms(1300),
             shootSeq,
 
 
             sleepms(1100),
-            execute { goTo(44.0, 34.0, 180.0) }, // last spike mark -6
-            sleepms(1900),
+            execute { goTo(44.0, 32.0, 180.0) }, // last spike mark -6
+            sleepms(1800),
             preCollectSeq,
-            execute { goTo(14.0, 34.0, 180.0) },//collected
+            execute { goTo(20.0, 32.0, 180.0) },//collected
             sleepms(700),
             afterCollectSeq,
             execute { goTo(59.0, 79.0, 180.0) },
@@ -156,7 +155,7 @@ class AutoCloseBlueClasifier : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))
             shootSeq,
 
             sleepms(900),
-            execute { goTo(59.0, 65.0, 180.0) },
+            execute { goTo(30.0, 60.0, 180.0) },
 
             sleepms(999999999)
         )

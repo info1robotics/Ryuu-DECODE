@@ -141,8 +141,11 @@ class Teleop : LinearOpMode() {
     }
     var tx = 0.0
     private fun handleInputTurret() {
-        Turret.setPosition(Turret.FORWARD_POSITION)
-        //Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.heading,allianceColour)
+        //Turret.setPosition(Turret.FORWARD_POSITION)
+        if(Math.toDegrees(follower.pose.heading)<96 && Math.toDegrees(follower.pose.heading)>-35)
+            Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+        else
+            Turret.setPosition(Turret.FORWARD_POSITION)
     }
     override fun runOpMode() {
         Controller.init(hardwareMap)

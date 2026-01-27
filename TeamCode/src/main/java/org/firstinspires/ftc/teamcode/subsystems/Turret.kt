@@ -79,8 +79,8 @@ object Turret {
         var turretAngle = targetAngleField - robotHeading
 
         // Normalize to [-PI, PI]
-        while (turretAngle > PI) turretAngle -= 2 * PI
-        while (turretAngle < -PI) turretAngle += 2 * PI
+        while (turretAngle > PI) turretAngle -=  Math.toRadians(85.0)
+        while (turretAngle < -PI) turretAngle +=  Math.toRadians(85.0)
 
         // Convert to servo position
         val servoPosition =(

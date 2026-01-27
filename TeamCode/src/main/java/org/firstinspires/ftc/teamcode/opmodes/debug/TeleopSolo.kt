@@ -63,10 +63,9 @@ class TeleopSolo : LinearOpMode() {
         if(!transition)
         {
 
-            if(!Intake.isFull())
+            if(!Intake.isEmptyBottom())
             {
                 gamepad1.rumbleBlips(1)
-                Shooter.charge()
             }
 
             if(gamepad1.right_bumper)
@@ -96,6 +95,9 @@ class TeleopSolo : LinearOpMode() {
 
         if(distance<max)
         {
+            if(!transition && Intake.isFull())
+                Shooter.charge()
+
             far = false
             Hood.setPosition(Hood.calculate(distance))
             if(gamepadEx1.getButtonDown("a"))
@@ -123,10 +125,12 @@ class TeleopSolo : LinearOpMode() {
     }
     var tx =0.0
     private fun handleInputTurret() {
-
-        Turret.setPosition(Turret.FORWARD_POSITION)
-    }
         //Turret.setPosition(Turret.FORWARD_POSITION)
+        if(Math.toDegrees(follower.pose.heading)<96 && Math.toDegrees(follower.pose.heading)>-35)
+            Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+        else
+            Turret.setPosition(Turret.FORWARD_POSITION)
+    }
 
     override fun runOpMode() {
         Controller.init(hardwareMap)

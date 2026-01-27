@@ -36,16 +36,15 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             actionQueue.add(100)
             {
                 Wicket.setPosition(Wicket.OPEN_POSITION)
-                actionQueue.add(300)
+                actionQueue.add(200)
                 {
                     Shooter.setRPM(power)
                     Intake.setPowerMain(1.0)
-                    Intake.setPowerSupport(0.7)
-                    actionQueue.add(400)
+                    Intake.setPowerSupport(1.0)
+                    actionQueue.add(300)
                     {
                         Shooter.setRPM(power)
-
-                        actionQueue.add(700)
+                        actionQueue.add(600)
                         {
                             Shooter.setRPM(0.0)
                             Wicket.setPosition(Wicket.CLOSE_POSITION)
@@ -79,7 +78,7 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             execute{Turret.setPosition(0.525)},
             sleepms(1100),
             shootSeq,
-            sleepms(1000),
+            sleepms(900),
 
             execute{ goTo(90.0,63.2,0.0)},//pre collect -2
             preCollectSeq,
@@ -94,7 +93,7 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             sleepms(1200),
             shootSeq,//TODO calibrate the gate position y
 
-            sleepms(1100),
+            sleepms(900),
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
             execute{ goTo(90.0,62.9,0.0)},//
             sleepms(1300),
@@ -109,7 +108,7 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             sleepms(1300),
             shootSeq,
 
-            sleepms(1100),
+            sleepms(900),
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },//spike mark
             execute{ goTo(98.0,83.9,0.0)} ,//pre collect -4
             preCollectSeq,
@@ -123,7 +122,7 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             shootSeq,
 
 
-            sleepms(1100),
+            sleepms(900),
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
             execute{ goTo(90.0,62.9,0.0)},//
             sleepms(1300),
@@ -138,7 +137,7 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
             sleepms(1300),
             shootSeq,
 
-            sleepms(1100),
+            sleepms(900),
             execute { goTo(92.0, 38.5, 0.0) }, // last spike mark -6
             preCollectSeq,
             sleepms(1900),

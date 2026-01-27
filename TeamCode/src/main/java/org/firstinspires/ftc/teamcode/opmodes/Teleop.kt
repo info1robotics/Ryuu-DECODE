@@ -74,7 +74,7 @@ class Teleop : LinearOpMode() {
         if(!transition)
         {
 
-            if(!Intake.isEmpty())
+            if(!Intake.isEmptyBottom())
             {
                 gamepad1.rumbleBlips(1)
                 gamepad2.rumbleBlips(1)
@@ -88,7 +88,10 @@ class Teleop : LinearOpMode() {
             else
             {
                 Intake.setPowerMain(gamepad2.right_trigger.toDouble())
-                Intake.setPowerSupport((gamepad2.right_trigger.toDouble())*(0.6))
+                if(!Intake.isEmptyTop())
+                    Intake.setPowerSupport(0.0)
+                else
+                    Intake.setPowerSupport((gamepad2.right_trigger.toDouble())*(0.7))
             }
             if(gamepad2.right_bumper)
                 Joint.setPosition(Joint.COLLECT_POSITION+0.1)
@@ -109,7 +112,8 @@ class Teleop : LinearOpMode() {
 
         if(distance<max)
         {
-
+            if(!transition && Intake.isFull())
+                Shooter.charge()
             far = false
             Hood.setPosition(Hood.calculate(distance))
             if(gamepadEx2.getButtonDown("a"))
@@ -120,7 +124,7 @@ class Teleop : LinearOpMode() {
                     {
                         Intake.setPowerMain(1.0)
                         Intake.setPowerSupport(1.0)
-                        actionQueue.add(1100)
+                        actionQueue.add(900)
                         {
                             Intake.stop()
                             Shooter.setRPM(0.0)
@@ -138,7 +142,7 @@ class Teleop : LinearOpMode() {
     var tx = 0.0
     private fun handleInputTurret() {
         Turret.setPosition(Turret.FORWARD_POSITION)
-        //Turret.setPosition(Turret.FORWARD_POSITION)
+        //Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.heading,allianceColour)
     }
     override fun runOpMode() {
         Controller.init(hardwareMap)
@@ -193,9 +197,9 @@ class Teleop : LinearOpMode() {
             distancePP = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
             distance = distancePP//change distance method
 
-            delay = if(distance<=108) 700
-            else if(distance>108 && distance<166) 900
-            else 1100
+            delay = if(distance<=108) 200
+            else if(distance>108 && distance<185) 400
+            else 700
 
             log.add("choose alliance colour RED/BLUE by dpad left/right",allianceColour.toString())
             Limelight.getTx()?.let { log.add("tx", it) }
@@ -203,7 +207,7 @@ class Teleop : LinearOpMode() {
             //tx= Limelight.getTx()!!
             log.add("distanceLL $distanceLL")
             log.add("distancePP $distancePP")
-            log.add("is empty",Intake.isEmpty())
+            log.add("Intake has 3 balls",Intake.isFull())
             //log.add("rgb",Intake.getColorReading())
             log.add("@X", follower.pose.x)
             log.add("@Y", follower.pose.y)

@@ -10,20 +10,24 @@ object Joint {
     var COLLECT_POSITION = 0.65
     var INIT_POSITION = 0.53
 
-    private lateinit var servoJoint: ServoImplEx
+    private lateinit var servoJointLeft: ServoImplEx
+    private lateinit var servoJointRight: ServoImplEx
 
     fun init(hardwareMap: HardwareMap) {
-        servoJoint = hardwareMap.get(ServoImplEx::class.java, "servoJoint")
-        servoJoint.direction = Servo.Direction.REVERSE
-        servoJoint.pwmRange = PwmRange(500.0, 2500.0)
+        servoJointLeft = hardwareMap.get(ServoImplEx::class.java, "servoJointLeft")
+        servoJointRight = hardwareMap.get(ServoImplEx::class.java, "servoJointRight")
+        servoJointLeft.direction = Servo.Direction.REVERSE
+        servoJointLeft.pwmRange = PwmRange(500.0, 2500.0)
+        servoJointRight.pwmRange = PwmRange(500.0,2500.0)
     }
 
     fun setPosition(position: Double) {
-        servoJoint.position = position
+        servoJointRight.position = position
+        servoJointLeft.position = position
     }
 
     fun getPosition(): Double {
-        return servoJoint.position
+        return servoJointLeft.position
     }
 
 

@@ -56,39 +56,29 @@ class TeleopSolo : LinearOpMode() {
         forwardPower = gamepad1.corrected_left_stick_y().toDouble()
         strafePower =  gamepad1.left_stick_x.toDouble()
         primaryRotationPower = (gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble())
-
-            Drivetrain.driveMecanum(forwardPower, strafePower, primaryRotationPower, 1.0)
+        Drivetrain.driveMecanum(forwardPower, strafePower, primaryRotationPower, 1.0)
     }
     private fun handleInputIntake()
     {
         if(!transition)
         {
-            /*
-            if(!Intake.isEmpty())
+
+            if(!Intake.isFull())
             {
                 gamepad1.rumbleBlips(1)
-                gamepad2.rumbleBlips(1)
+                Shooter.charge()
             }
 
-             */
-
-            if (gamepad1.left_bumper )
+            if(gamepad1.right_bumper)
             {
-                Intake.reverse()
-                empty = 1.0
+                Intake.setPowerMain(1.0)
+                Intake.setPowerSupport(0.7)
             }
             else
             {
-                if(gamepad1.right_bumper)
-                {
-                    Intake.setPowerMain(1.0)
-                    Intake.setPowerSupport(0.7)
-                }
-                else
-                {
-                    Intake.stop()
-                }
+                Intake.stop()
             }
+
             if(gamepad1.right_bumper)
                 Joint.setPosition(Joint.COLLECT_POSITION)
             else
@@ -187,9 +177,9 @@ class TeleopSolo : LinearOpMode() {
 
             power = Shooter.calculate(distance)
 
-            delay = if(distance<=108) 700
-            else if(distance>108 && distance<166) 900
-            else 1100
+            delay = if(distance<=108) 200
+            else if(distance>108 && distance<166) 400
+            else 600
 
             var ta = Limelight.getTa()
             var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }

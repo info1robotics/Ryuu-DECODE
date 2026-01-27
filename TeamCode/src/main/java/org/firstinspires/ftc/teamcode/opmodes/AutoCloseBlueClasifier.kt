@@ -41,7 +41,7 @@ class AutoCloseBlueClasifier : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))
                 actionQueue.add(300) {
                     Shooter.setRPM(power)
                     Intake.setPowerMain(1.0)
-                    Intake.setPowerSupport(0.7)
+                    Intake.setPowerSupport(1.0)
                     actionQueue.add(400) {
                         Shooter.setRPM(power)
                         actionQueue.add(700) {

@@ -9,14 +9,18 @@ object Intake {
 
     lateinit var motorIntakeMain: DcMotor
     lateinit var motorIntakeSupport: DcMotor
-    private lateinit var breakBeam: DigitalChannel
+    private lateinit var breakBeamBottom: DigitalChannel
+    private lateinit var breakBeamTop: DigitalChannel
 
     fun init(hardwareMap: HardwareMap) {
         motorIntakeMain = hardwareMap.get(DcMotor::class.java, "motorIntakeMain")
         motorIntakeSupport = hardwareMap.get(DcMotor::class.java, "motorIntakeSupport")
 
-        breakBeam = hardwareMap.get(DigitalChannel::class.java, "sensorIntake")
-        breakBeam.mode = DigitalChannel.Mode.INPUT
+        breakBeamBottom = hardwareMap.get(DigitalChannel::class.java, "sensorIntakeBottom")
+        breakBeamBottom.mode = DigitalChannel.Mode.INPUT
+
+        breakBeamTop = hardwareMap.get(DigitalChannel::class.java, "sensorIntakeTop")
+        breakBeamTop.mode = DigitalChannel.Mode.INPUT
 
         motorIntakeMain.direction = DcMotorSimple.Direction.FORWARD
         motorIntakeSupport.direction = DcMotorSimple.Direction.REVERSE
@@ -74,14 +78,18 @@ object Intake {
     /**
      * @return true if intake is empty (beam NOT broken)
      */
-    fun isEmpty(): Boolean {
-        return breakBeam.state
+    fun isEmptyBottom(): Boolean {
+        return breakBeamBottom.state
     }
+    fun isEmptyTop():Boolean{
+        return breakBeamTop.state
+    }
+
 
     /**
      * @return true if object is detected (beam broken)
      */
-    fun hasObject(): Boolean {
-        return !breakBeam.state
+    fun isFull(): Boolean {
+        return !isEmptyTop() && !isEmptyBottom()
     }
 }

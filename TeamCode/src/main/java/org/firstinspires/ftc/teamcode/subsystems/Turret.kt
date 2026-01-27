@@ -16,20 +16,25 @@ object Turret {
     var LOWER_LIMIT = 0.0//85 turing left
     var FORWARD_POSITION = 0.5//0 degrees
 
-    private lateinit var servoTurret: ServoImplEx//axon mini mk2 gear ratio 24-50
+    private lateinit var servoTurretRight: ServoImplEx//axon mini mk2 gear ratio 24-50
+    private lateinit var servoTurretLeft: ServoImplEx
 
     fun init(hardwareMap: HardwareMap) {
-        servoTurret = hardwareMap.get(ServoImplEx::class.java, "servoTurret")
-        servoTurret.pwmRange = PwmRange(500.0, 2500.0)
+        servoTurretRight = hardwareMap.get(ServoImplEx::class.java, "servoTurretRight")
+        servoTurretLeft = hardwareMap.get(ServoImplEx::class.java, "servoTurretLeft")
+
+        servoTurretRight.pwmRange = PwmRange(500.0, 2500.0)
+        servoTurretLeft.pwmRange = PwmRange(500.0, 2500.0)
 
     }
 
     fun setPosition(position: Double) {
-        servoTurret.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
+        servoTurretRight.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
+        servoTurretLeft.position = position.coerceIn(LOWER_LIMIT, HIGHER_LIMIT)
     }
 
     fun getPosition(): Double {
-        return servoTurret.position
+        return servoTurretRight.position
     }
     fun hold()
     {

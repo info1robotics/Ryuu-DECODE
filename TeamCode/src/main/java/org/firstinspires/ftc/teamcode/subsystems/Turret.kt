@@ -56,41 +56,42 @@ object Turret {
         robotX: Double,
         robotY: Double,
         robotHeading: Double,
-        allianceColour:Colours
+        allianceColour: Colours
     ) {
 
-        if(allianceColour == Colours.BLUE)
-        {
-            targetX = 130.0
-            targetY = 14.0
-        }
-        else
-        {
-            targetX = 130.0
+        // ✅ use real field goal positions
+        if (allianceColour == Colours.BLUE) {
+            targetX = 14.0
             targetY = 130.0
-
+        } else {
+            targetX = 130.0
+                targetY =130.0
         }
 
         val dx = targetX - robotX
         val dy = targetY - robotY
 
+        // angle to target in FIELD frame
         val targetAngleField = atan2(dy, dx)
 
+        // convert to ROBOT frame
         var turretAngle = targetAngleField - robotHeading
 
-        // Normalize to [-PI, PI]
-        while (turretAngle > PI) turretAngle -=  Math.toRadians(85.0)
-        while (turretAngle < -PI) turretAngle +=  Math.toRadians(85.0)
+        // ✅ proper normalization
+        while (turretAngle > PI) turretAngle -= 2 * PI
+        while (turretAngle < -PI) turretAngle += 2 * PI
 
-        // Convert to servo position
-        val servoPosition =(
-                FORWARD_POSITION +
-                        (turretAngle / PI) * 0.95 +
-                        offset).coerceIn(-0.95,0.95)
+        // clamp turret motion
+        turretAngle = turretAngle.coerceIn(-MAX_TURRET_ANGLE, MAX_TURRET_ANGLE)
+
+        // map angle → servo
+        val servoPosition =
+            FORWARD_POSITION +
+                    (turretAngle / MAX_TURRET_ANGLE) * 0.45 +
+                    offset
 
         setPosition(servoPosition)
     }
-
 
 
 }

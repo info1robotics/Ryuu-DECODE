@@ -95,8 +95,12 @@ class TeleopSolo : LinearOpMode() {
 
         if(distance<max)
         {
-            if(!transition && Intake.isFull())
+            /*
+            if(!transition && Intake.isFull() && distance<150)
                 Shooter.charge()
+
+             */
+
 
             far = false
             Hood.setPosition(Hood.calculate(distance))
@@ -119,16 +123,43 @@ class TeleopSolo : LinearOpMode() {
                 }
             }
         }
-        if(transition)
+        else
+        {
+            far = true
+        }
+        if(transition && distance < max)
             Shooter.setRPM(power)
 
     }
-    var tx =0.0
+    var hold = false
+    var headingCorrector = 0.0
     private fun handleInputTurret() {
-        //Turret.setPosition(Turret.FORWARD_POSITION)
-        if(Math.toDegrees(follower.pose.heading)<96 && Math.toDegrees(follower.pose.heading)>-35)
-            Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+
+        if(gamepadEx1.getButtonDown("y") && !hold) hold=true
+        else if(gamepadEx1.getButtonDown("y") && hold) hold=false
+
+        if(!hold && distance < 200)
+        {
+            if(allianceColour==Colours.BLUE)
+            {
+                if(Math.toDegrees(follower.pose.heading)<180 && Math.toDegrees(follower.pose.heading)>60)//previously 96 -60
+                    Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+                else
+                    Turret.setPosition(Turret.FORWARD_POSITION)
+            }
+            else
+            {
+                if(Math.toDegrees(follower.pose.heading)<96 && Math.toDegrees(follower.pose.heading)>-60)//previously 96 -60
+                    Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+                else
+                    Turret.setPosition(Turret.FORWARD_POSITION)
+            }
+
+        }
         else
+
+
+
             Turret.setPosition(Turret.FORWARD_POSITION)
     }
 
@@ -164,32 +195,38 @@ class TeleopSolo : LinearOpMode() {
             gamepadEx1.update()
             gamepadEx2.update()
             actionQueue.update()
-            follower.update()
 
-            if(gamepad1.dpad_right) {
+            follower.update()
+            if (gamepad1.dpad_right) {
                 allianceColour = Colours.RED
                 Limelight.allianceTag = AprilTags.RED
-                follower = Constants.createFollower(hardwareMap)
-                follower.pose = AutoConstants.RED_TELE_POS
+                follower.pose = Pose(
+                    120.0,
+                    123.0,
+                    Math.toRadians(32.0)
+                )
             }
-            else if(gamepad1.dpad_left) {
+            else if (gamepad1.dpad_left) {
                 allianceColour = Colours.BLUE
                 Limelight.allianceTag = AprilTags.BLUE
-                follower = Constants.createFollower(hardwareMap)
-                follower.pose = AutoConstants.BLUE_TELE_POS
+
+                follower.pose = Pose(
+                    24.0,
+                    123.0,
+                    Math.toRadians(148.0)
+                )
             }
 
             power = Shooter.calculate(distance)
 
-            delay = if(distance<=108) 200
-            else if(distance>108 && distance<166) 400
-            else 600
+            delay = if(distance<=108) 500//200 charge
+            else if(distance>108 && distance<166) 700//400 charge
+            else 1100//600
 
             var ta = Limelight.getTa()
             var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }
             distancePP = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
             distance = distancePP//change distance method
-
             log.add("choose alliance colour RED/BLUE by dpad left/right",allianceColour.toString())
             Limelight.getTx()?.let { log.add("tx", it) }
             Limelight.getTa()?.let  { log.add("ta", it) }
@@ -201,6 +238,7 @@ class TeleopSolo : LinearOpMode() {
             log.add("@X", follower.pose.x)
             log.add("@Y", follower.pose.y)
             log.add("@Heading", Math.toDegrees(follower.pose.heading))
+            log.add("raw heading",follower.pose.heading)
             log.add("distance from $allianceColour goal: $distancePP")
             log.add(("far "+(far).toString()))
             log.tick()

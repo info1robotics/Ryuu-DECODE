@@ -80,7 +80,7 @@ class AutoFarBlue : AutoBase(Pose(54.0, 9.0, Math.toRadians(90.0)),Colours.BLUE)
         task = serial(
             execute { Wicket.setPosition(Wicket.CLOSE_POSITION) }, // preload -1
             charge,
-            execute { Turret.setPosition(0.635) },
+            execute { Turret.setPosition(0.645) },
 
             execute { goTo(54.0, 16.0, 90.0) },
             sleepms(1200),
@@ -104,44 +104,40 @@ class AutoFarBlue : AutoBase(Pose(54.0, 9.0, Math.toRadians(90.0)),Colours.BLUE)
             sleepms(2200),
 
             // human player -3
-            execute { goTo(4.0, 8.0, 180.0) },
-            sleepms(300),
             preCollectSeq,
+            execute { goTo(1.0, 8.0, 180.0) },
             sleepms(2000),
-            afterCollectSeq,
+            execute { goTo(20.0, 8.0, 180.0) },
+            sleepms(1000),
+            execute { goTo(1.0, 8.0, 180.0) },
+            sleepms(1800),
             charge,
 
             execute { goTo(54.0, 16.0, 90.0) },
             sleepms(700),
+            afterCollectSeq,
             execute { Joint.setPosition(Joint.INIT_POSITION + 0.1) },
             sleepms(1900),
             shootSeq,
 
             sleepms(2000),
-
             // human player -4
             execute { goTo(4.0, 8.0, 150.0) },
             preCollectSeq,
             sleepms(400),
-
             execute { goTo(5.0, 9.0, 110.0) },
             sleepms(800),
-
             execute { goTo(5.0, 40.0, 110.0) },
             sleepms(2500),
             charge,
-            afterCollectSeq,
-
             // shooting position
             execute { goTo(54.0, 16.0, 90.0) },
             sleepms(700),
             execute { Joint.setPosition(Joint.INIT_POSITION + 0.1) },
             sleepms(1900),
             shootSeq,
-
             sleepms(2200),
             execute { goTo(54.0, 30.0, 90.0) },
-
             sleepms(999999999)
         )
     }

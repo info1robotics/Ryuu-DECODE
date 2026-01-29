@@ -80,7 +80,7 @@ class AutoFarRed : AutoBase(Pose(90.0, 9.0, Math.toRadians(90.0)),Colours.RED) {
         task = serial(
             execute{Wicket.setPosition(Wicket.CLOSE_POSITION)},//preload -1
             charge,
-            execute{Turret.setPosition(0.365)},
+            execute{Turret.setPosition(0.372)},
             execute{goTo(90.0,16.0,90.0)},
             sleepms(1200),
             shootSeq,
@@ -98,14 +98,18 @@ class AutoFarRed : AutoBase(Pose(90.0, 9.0, Math.toRadians(90.0)),Colours.RED) {
             sleepms(2500),
             shootSeq,
             sleepms(2200),
-            execute{goTo(140.0,8.0,0.0)},//human player -3
-            sleepms(300),
+
             preCollectSeq,
+            execute{goTo(140.0,8.0,0.0)},//human player -3
             sleepms(2000),
-            afterCollectSeq,
+            execute{goTo(125.0,8.0,0.0)},
+            sleepms(1000),
+            execute{goTo(140.0,8.0,0.0)},
+            sleepms(1800),
             charge,
             execute{goTo(90.0,16.0,90.0)},
             sleepms(700),
+            afterCollectSeq,
             execute{Joint.setPosition(Joint.INIT_POSITION+0.1)},
             sleepms(1900),
             shootSeq,
@@ -119,7 +123,6 @@ class AutoFarRed : AutoBase(Pose(90.0, 9.0, Math.toRadians(90.0)),Colours.RED) {
             execute{goTo(139.0,40.0,70.0)},
             sleepms(2500),
             charge,
-            afterCollectSeq,
             execute{goTo(90.0,16.0,90.0)},//shooting position
             sleepms(700),
             execute{Joint.setPosition(Joint.INIT_POSITION+0.1)},

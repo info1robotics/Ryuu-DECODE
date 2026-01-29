@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Controller
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain
 import org.firstinspires.ftc.teamcode.subsystems.Hood
 import org.firstinspires.ftc.teamcode.subsystems.Shooter
+import org.firstinspires.ftc.teamcode.subsystems.Turret
 import org.firstinspires.ftc.teamcode.tasks.Task
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.openftc.easyopencv.OpenCvCamera
@@ -84,6 +85,7 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
     }
 
     fun onStartTick() {
+        //turretLock()
         distance = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
         power = Shooter.calculate(distance)
         deg = Hood.calculate(distance)
@@ -140,5 +142,12 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
     companion object {
         var state: State = State.DEFAULT
         var instance: AutoBase? = null
+    }
+    fun turretLock()
+    {
+        if(Math.toDegrees(follower.pose.heading)<96 && Math.toDegrees(follower.pose.heading)>-60)//previously -35
+            Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+        else
+            Turret.setPosition(Turret.FORWARD_POSITION)
     }
 }

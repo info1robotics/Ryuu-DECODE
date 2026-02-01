@@ -11,8 +11,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit
 import kotlin.math.pow
 
 object Shooter {
-    private lateinit var motorShooterFirst: DcMotorEx // 6000 RPM goBILDA (≈8400 RPM after 1.4x gear)
-    private lateinit var motorShooterSecond: DcMotorEx
+     lateinit var motorShooterFirst: DcMotorEx // 6000 RPM goBILDA (≈8400 RPM after 1.4x gear)
+     lateinit var motorShooterSecond: DcMotorEx
     private lateinit var voltageSensor: VoltageSensor
 
     private const val MOTOR_TICKS_PER_REV = 28
@@ -32,6 +32,7 @@ object Shooter {
 
         motorShooterFirst.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
         motorShooterFirst.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
+
 
         motorShooterFirst.mode = DcMotor.RunMode.RUN_USING_ENCODER
         motorShooterSecond.mode = DcMotor.RunMode.RUN_USING_ENCODER
@@ -83,6 +84,16 @@ object Shooter {
         val ticksPerSec = motorShooterFirst.velocity
         return (ticksPerSec / MOTOR_TICKS_PER_REV) * 60.0
     }
+    fun getRPMfirst(): Double {
+        val ticksPerSec = motorShooterFirst.velocity
+        return (ticksPerSec / MOTOR_TICKS_PER_REV) * 60.0
+    }
+    fun getRPMsecond(): Double {
+        val ticksPerSec = motorShooterSecond.velocity
+        return (ticksPerSec / MOTOR_TICKS_PER_REV) * 60.0
+    }
+
+
     fun stop() {
         motorShooterFirst.power = 0.0
         motorShooterSecond.power = 0.0

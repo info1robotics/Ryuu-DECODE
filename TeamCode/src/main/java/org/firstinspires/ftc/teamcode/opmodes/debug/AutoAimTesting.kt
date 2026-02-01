@@ -39,16 +39,16 @@ class AutoAimTesting : LinearOpMode() {
         Intake.init(hardwareMap)
         Turret.init(hardwareMap)
 
-        Limelight.init(hardwareMap,0)
-        Limelight.start()
+        //Limelight.init(hardwareMap,0)
+        //Limelight.start()
         log = Log(telemetry)
         waitForStart()
 
 
         while (opModeIsActive()) {
 
-            var ta = Limelight.getTa()
-            var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }
+            //var ta = Limelight.getTa()
+            //var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }
             Joint.setPosition(Joint.COLLECT_POSITION)
             if(tuning)
             {
@@ -67,17 +67,20 @@ class AutoAimTesting : LinearOpMode() {
             log.add("if it s false then you just give the distance and it calculates " +
                     "the power and degree automatically use this to check if the trajectory is accurate")
             log.add("Shooter Power", Shooter.getPower())
-            log.add("Shooter RPM",Shooter.getRPM())
+            log.add("Shooter first rpm",Shooter.getRPMfirst())
+            log.add("Shooter second rpm",Shooter.getRPMsecond())
 
             if(rpm-Shooter.getRPM()<=30)
                 achieved = true
             else
                 achieved = false
 
-            Limelight.getTx()?.let { log.add("tx", it) }
-            Limelight.getTa()?.let { log.add("ta", it) }
+            //Limelight.getTx()?.let { log.add("tx", it) }
+            //Limelight.getTa()?.let { log.add("ta", it) }
             log.add("Is velocity achieved:",achieved)
-            log.add(distanceLL.toString())
+            log.add("first velo",Shooter.motorShooterFirst.velocity)
+            log.add("second velo",Shooter.motorShooterSecond.velocity)
+            //log.add(distanceLL.toString())
             log.tick()
         }
 

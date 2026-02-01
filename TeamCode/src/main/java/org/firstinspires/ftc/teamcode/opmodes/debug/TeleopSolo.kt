@@ -95,12 +95,9 @@ class TeleopSolo : LinearOpMode() {
 
         if(distance<max)
         {
-            /*
-            if(!transition && Intake.isFull() && distance<150)
+
+            if(!transition && Intake.isFull() && distance<190)
                 Shooter.charge()
-
-             */
-
 
             far = false
             Hood.setPosition(Hood.calculate(distance))
@@ -158,8 +155,6 @@ class TeleopSolo : LinearOpMode() {
         }
         else
 
-
-
             Turret.setPosition(Turret.FORWARD_POSITION)
     }
 
@@ -167,7 +162,7 @@ class TeleopSolo : LinearOpMode() {
         Controller.init(hardwareMap)
         Pinpoint.init(hardwareMap)
 
-        Limelight.start()
+        //Limelight.start()
 
         val log = Log(telemetry)
 
@@ -199,7 +194,7 @@ class TeleopSolo : LinearOpMode() {
             follower.update()
             if (gamepad1.dpad_right) {
                 allianceColour = Colours.RED
-                Limelight.allianceTag = AprilTags.RED
+                //Limelight.allianceTag = AprilTags.RED
                 follower.pose = Pose(
                     120.0,
                     123.0,
@@ -208,7 +203,7 @@ class TeleopSolo : LinearOpMode() {
             }
             else if (gamepad1.dpad_left) {
                 allianceColour = Colours.BLUE
-                Limelight.allianceTag = AprilTags.BLUE
+               // Limelight.allianceTag = AprilTags.BLUE
 
                 follower.pose = Pose(
                     24.0,
@@ -223,13 +218,13 @@ class TeleopSolo : LinearOpMode() {
             else if(distance>108 && distance<166) 700//400 charge
             else 1100//600
 
-            var ta = Limelight.getTa()
-            var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }
+            //var ta = Limelight.getTa()
+            //var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }
             distancePP = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
             distance = distancePP//change distance method
             log.add("choose alliance colour RED/BLUE by dpad left/right",allianceColour.toString())
-            Limelight.getTx()?.let { log.add("tx", it) }
-            Limelight.getTa()?.let  { log.add("ta", it) }
+            //Limelight.getTx()?.let { log.add("tx", it) }
+            //Limelight.getTa()?.let  { log.add("ta", it) }
             //tx= Limelight.getTx()!!
             log.add("distanceLL $distanceLL")
             log.add("distancePP $distancePP")

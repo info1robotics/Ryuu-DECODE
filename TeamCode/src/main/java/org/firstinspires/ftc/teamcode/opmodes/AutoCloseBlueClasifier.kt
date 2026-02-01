@@ -96,10 +96,10 @@ class AutoCloseBlueClasifier : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
             execute { goTo(40.4, 61.5, 180.0) }, // collect -3
             sleepms(1300),
-            execute { goTo(19.4, 61.5, 180.0) },
+            execute { goTo(17.4, 61.5, 180.0) },
             preCollectSeq,
             sleepms(700),
-            execute { goTo(11.8, 56.0, 150.0) }, // push gate
+            execute { goTo(7.5, 56.0, 147.0) }, // push gate
             sleepms(1500),
             execute { Shooter.charge() },
             execute { goTo(59.0, 79.0, 180.0) },
@@ -127,10 +127,10 @@ class AutoCloseBlueClasifier : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0))
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
             execute { goTo(40.4, 61.5, 180.0) }, // collect -5
             sleepms(1300),
-            execute { goTo(19.4, 61.5, 180.0) },
+            execute { goTo(17.4, 61.5, 180.0) },
             preCollectSeq,
             sleepms(700),
-            execute { goTo(11.8, 56.0, 150.0) }, // push gate
+            execute { goTo(7.5, 56.0, 147.0) }, // push gate
             sleepms(1500),
             execute { Shooter.charge() },
             execute { goTo(59.0, 79.0, 180.0) },

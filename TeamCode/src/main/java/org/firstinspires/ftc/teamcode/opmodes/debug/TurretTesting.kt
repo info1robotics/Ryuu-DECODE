@@ -28,14 +28,14 @@ class TurretTesting : LinearOpMode() {
         Drivetrain.init(hardwareMap)
         follower = Constants.createFollower(hardwareMap)
         follower.pose = Pose(120.0,123.0,32.0)
-        Limelight.init(hardwareMap,0)
+        //Limelight.init(hardwareMap,0)
 
         //Limelight.start()
         log = Log(this.telemetry)
         waitForStart()
 
         while (opModeIsActive()) {
-            var tx = Limelight.getTx()
+            //var tx = Limelight.getTx()
             Turret.setPosition(position)
             log.add("@X", follower.pose.x)
             log.add("@Y", follower.pose.y)

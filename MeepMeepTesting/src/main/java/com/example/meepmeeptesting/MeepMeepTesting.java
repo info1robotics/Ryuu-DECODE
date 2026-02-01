@@ -19,8 +19,8 @@ public class MeepMeepTesting {
                 .build();
 
 
-        TrajectoryActionBuilder firstTraj = myBot.getDrive().actionBuilder(new Pose2d(9.0, -61, Math.toRadians(90)))
-                .strafeToLinearHeading(new Vector2d(-54, -59),Math.toRadians(30));
+        TrajectoryActionBuilder firstTraj = myBot.getDrive().actionBuilder(new Pose2d(0.0, 0.0, Math.toRadians(90)))
+                .strafeToLinearHeading(new Vector2d(10.0, 10.0),Math.toRadians(30));
 
 
 //        TrajectoryActionBuilder secondTraj = firstTraj.endTrajectory()
@@ -35,7 +35,7 @@ public class MeepMeepTesting {
                 )
         );
 
-        meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_OFFICIAL)
+        meepMeep.setBackground(MeepMeep.Background.FIELD_DECODE_JUICE_DARK)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)

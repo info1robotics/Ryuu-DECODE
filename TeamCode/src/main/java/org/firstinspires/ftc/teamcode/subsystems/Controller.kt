@@ -17,7 +17,7 @@ object Controller {
         Shooter.init(hardwareMap)
         Turret.init(hardwareMap)
         Hood.init(hardwareMap)
-        Limelight.init(hardwareMap,0)
+        //Limelight.init(hardwareMap,0)
         Joint.init(hardwareMap)
         Jack.init(hardwareMap)
         Wicket.init(hardwareMap)

@@ -148,7 +148,7 @@ class Teleop : LinearOpMode() {
         if(gamepadEx1.getButtonDown("a") && !hold) hold=true
         else if(gamepadEx1.getButtonDown("a") && hold) hold=false
 
-        if(!hold && distance < 200 && transition)
+        if(!hold && distance < 190)
         {
             if(allianceColour==Colours.BLUE)
             {
@@ -169,11 +169,12 @@ class Teleop : LinearOpMode() {
         else
             Turret.setPosition(Turret.FORWARD_POSITION)
     }
+    var wasSelected = false
     override fun runOpMode() {
         Controller.init(hardwareMap)
         Pinpoint.init(hardwareMap)
 
-        Limelight.start()
+        //Limelight.start()
 
         val log = Log(telemetry)
 
@@ -185,7 +186,7 @@ class Teleop : LinearOpMode() {
         log.tick()
         waitForStart()
 
-        while (gamepad1.atRest());
+        while (!gamepad1.dpad_left && !gamepad1.dpad_right);
         Controller.setInit()
         gamepadEx1 = GamepadEx(gamepad1)
         gamepadEx2 = GamepadEx(gamepad2)
@@ -205,17 +206,33 @@ class Teleop : LinearOpMode() {
             follower.update()
             if (gamepad1.dpad_right) {
                 allianceColour = Colours.RED
-                Limelight.allianceTag = AprilTags.RED
+               //Limelight.allianceTag = AprilTags.RED
+                follower.pose = Pose(//TODO change to autopos
+                    98.0,
+                    70.0,
+                    Math.toRadians(0.0)
+                )
+                wasSelected = true
+            }
+            else if (gamepad1.dpad_left) {
+                allianceColour = Colours.BLUE//TODO change to autopos
+                //Limelight.allianceTag = AprilTags.BLUE
+                follower.pose = Pose(
+                    45.0,
+                    60.0,
+                    Math.toRadians(180.0)
+                )
+                wasSelected = true
+            }
+
+            if (gamepad1.dpad_up && allianceColour==Colours.RED) {
                 follower.pose = Pose(
                     120.0,
                     123.0,
                     Math.toRadians(32.0)
                 )
             }
-            else if (gamepad1.dpad_left) {
-                allianceColour = Colours.BLUE
-                Limelight.allianceTag = AprilTags.BLUE
-
+            else if(gamepad1.dpad_up && allianceColour==Colours.BLUE) {
                 follower.pose = Pose(
                     24.0,
                     123.0,
@@ -224,8 +241,8 @@ class Teleop : LinearOpMode() {
             }
 
             power = Shooter.calculate(distance)
-            var ta = Limelight.getTa()
-            var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }
+            //var ta = Limelight.getTa()
+            //var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }
             distancePP = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
             distance = distancePP//change distance method
 
@@ -234,8 +251,8 @@ class Teleop : LinearOpMode() {
             else 700
 
             log.add("choose alliance colour RED/BLUE by dpad left/right",allianceColour.toString())
-            Limelight.getTx()?.let { log.add("tx", it) }
-            Limelight.getTa()?.let  { log.add("ta", it) }
+            //Limelight.getTx()?.let { log.add("tx", it) }
+            //Limelight.getTa()?.let  { log.add("ta", it) }
             //tx= Limelight.getTx()!!
             log.add("distanceLL $distanceLL")
             log.add("distancePP $distancePP")

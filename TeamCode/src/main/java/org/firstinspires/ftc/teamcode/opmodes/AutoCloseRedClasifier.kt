@@ -83,7 +83,7 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//3
             execute{ goTo(90.0,61.8,0.0)},//pre collect -2
             preCollectSeq,
             sleepms(1000),
-            execute{ goTo(123.0,61.8,0.0)},//collect
+            execute{ goTo(118.0,61.8,0.0)},//collect
             sleepms(1000),
             afterCollectSeq,
             execute{Turret.setPosition(0.76)},
@@ -95,12 +95,12 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//3
 
             sleepms(700),
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
-            execute{ goTo(103.0,61.5,0.0)},//
+            execute{ goTo(103.0,62.1,0.0)},//
             sleepms(1300),
-            execute{ goTo(122.6,61.5,0.0)},//collect -3
+            execute{ goTo(123.4,62.1,0.0)},//collect -3
             preCollectSeq,
             sleepms(700),
-            execute{ goTo(125.0,58.5,16.0)},//push gate
+            execute{ goTo(124.2,58.0,22.0)},//push gate
             sleepms(1500),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},
@@ -124,12 +124,12 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//3
 
             sleepms(700),
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
-            execute{ goTo(103.0,61.5,0.0)},//
+            execute{ goTo(103.0,62.1,0.0)},//
             sleepms(1300),
-            execute{ goTo(122.6,61.5,0.0)},//collect -5
+            execute{ goTo(123.4,62.1,0.0)},//collect -5
             preCollectSeq,
             sleepms(700),
-            execute{ goTo(125.0,58.0,16.0)},//push gate
+            execute{ goTo(124.2,58.0,22.0)},//push gate
             sleepms(1500),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},

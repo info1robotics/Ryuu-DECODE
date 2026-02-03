@@ -96,7 +96,7 @@ class TeleopSolo : LinearOpMode() {
         if(distance<max)
         {
 
-            if(!transition && Intake.isFull() && distance<190)
+            if(!transition && Intake.isFull())
                 Shooter.charge()
 
             far = false
@@ -135,7 +135,7 @@ class TeleopSolo : LinearOpMode() {
         if(gamepadEx1.getButtonDown("y") && !hold) hold=true
         else if(gamepadEx1.getButtonDown("y") && hold) hold=false
 
-        if(!hold && distance < 200)
+        if(!hold && distance < 225)
         {
             if(allianceColour==Colours.BLUE)
             {
@@ -214,9 +214,11 @@ class TeleopSolo : LinearOpMode() {
 
             power = Shooter.calculate(distance)
 
-            delay = if(distance<=108) 500//200 charge
-            else if(distance>108 && distance<166) 700//400 charge
-            else 1100//600
+            delay = if(distance<=108) 200
+            else if(distance>108 && distance<166) 400
+            else if(distance>166 && distance<190) 700
+            else 1100
+
 
             //var ta = Limelight.getTa()
             //var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }

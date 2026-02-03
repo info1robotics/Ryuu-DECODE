@@ -17,10 +17,10 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
 
 @Autonomous
 class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//32 cm from tile intersection
-    fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
-        val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))
-        follower.holdPoint(temp)
-    }
+fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
+    val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))
+    follower.holdPoint(temp)
+}
 
     fun goTo(x: Double, y: Double, degrees: Double) {
         val temp = Pose(x, y, Math.toRadians(degrees))
@@ -45,7 +45,7 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//3
                     {
                         Shooter.setRPM(power)
 
-                        actionQueue.add(500)
+                        actionQueue.add(800)
                         {
                             Shooter.setRPM(0.0)
                             Wicket.setPosition(Wicket.CLOSE_POSITION)
@@ -80,10 +80,11 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//3
             shootSeq,
             sleepms(700),
 
-            execute{ goTo(90.0,61.8,0.0)},//pre collect -2
+
+            execute{ goTo(90.0,61.2,0.0)},//pre collect -2  open gate at y 61.2
             preCollectSeq,
             sleepms(1000),
-            execute{ goTo(118.0,61.8,0.0)},//collect
+            execute{ goTo(115.0,61.2,0.0)},//collectopen gate at x=119 y=61.2
             sleepms(1000),
             afterCollectSeq,
             execute{Turret.setPosition(0.76)},
@@ -95,12 +96,12 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//3
 
             sleepms(700),
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
-            execute{ goTo(103.0,62.1,0.0)},//
+            execute{ goTo(103.0,61.5,0.0)},//
             sleepms(1300),
-            execute{ goTo(123.4,62.1,0.0)},//collect -3
+            execute{ goTo(122.6,61.5,0.0)},//collect -3
             preCollectSeq,
             sleepms(700),
-            execute{ goTo(124.2,58.0,22.0)},//push gate
+            execute{ goTo(125.0,57.0,16.0)},//push gate
             sleepms(1500),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},
@@ -114,7 +115,7 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//3
             execute{ goTo(98.0,83.6,0.0)} ,//pre collect -4
             preCollectSeq,
             sleepms(500),
-            execute{ goTo(123.0,83.6,0.0)},//collect
+            execute{ goTo(121.0,83.6,0.0)},//collect
             sleepms(750),
             afterCollectSeq,
             execute{Shooter.charge()},
@@ -124,12 +125,12 @@ class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//3
 
             sleepms(700),
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
-            execute{ goTo(103.0,62.1,0.0)},//
+            execute{ goTo(103.0,61.5,0.0)},//
             sleepms(1300),
-            execute{ goTo(123.4,62.1,0.0)},//collect -5
+            execute{ goTo(122.6,61.5,0.0)},//collect -5
             preCollectSeq,
             sleepms(700),
-            execute{ goTo(124.2,58.0,22.0)},//push gate
+            execute{ goTo(125.0,57.0,16.0)},//push gate
             sleepms(1500),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},

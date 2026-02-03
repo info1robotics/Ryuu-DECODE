@@ -43,7 +43,7 @@ class Teleop : LinearOpMode() {
     private var distanceLL = 0.0//distance got from limelight
     private var distancePP = 0.0//distance got from odo
     private var distance = 0.0
-    private var max = 250
+    private var max = 225
 
     var forwardPower =0.0
     var strafePower = 0.0
@@ -116,6 +116,7 @@ class Teleop : LinearOpMode() {
         {
             if(!transition && Intake.isFull())
                 Shooter.charge()
+
             far = false
             Hood.setPosition(Hood.calculate(distance))
             if(gamepadEx2.getButtonDown("a"))
@@ -126,7 +127,7 @@ class Teleop : LinearOpMode() {
                     {
                         Intake.setPowerMain(1.0)
                         Intake.setPowerSupport(1.0)
-                        actionQueue.add(900)
+                        actionQueue.add(1100)
                         {
                             Intake.stop()
                             Shooter.setRPM(0.0)
@@ -148,7 +149,7 @@ class Teleop : LinearOpMode() {
         if(gamepadEx1.getButtonDown("a") && !hold) hold=true
         else if(gamepadEx1.getButtonDown("a") && hold) hold=false
 
-        if(!hold && distance < 190)
+        if(!hold && distance < max)
         {
             if(allianceColour==Colours.BLUE)
             {
@@ -220,7 +221,7 @@ class Teleop : LinearOpMode() {
                 follower.pose = Pose(
                     45.0,
                     60.0,
-                    Math.toRadians(180.0)
+                    Math.toRadians(160.0)
                 )
                 wasSelected = true
             }
@@ -247,8 +248,9 @@ class Teleop : LinearOpMode() {
             distance = distancePP//change distance method
 
             delay = if(distance<=108) 200
-            else if(distance>108 && distance<185) 400
-            else 700
+            else if(distance>108 && distance<166) 400
+            else if(distance>166 && distance<190) 700
+            else 1100
 
             log.add("choose alliance colour RED/BLUE by dpad left/right",allianceColour.toString())
             //Limelight.getTx()?.let { log.add("tx", it) }

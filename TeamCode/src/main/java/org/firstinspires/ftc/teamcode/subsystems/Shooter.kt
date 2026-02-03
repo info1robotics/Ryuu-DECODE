@@ -19,10 +19,11 @@ object Shooter {
     const val MAX_RPM = 3428.0//
     const val MAX_VELOCITY = 1700.0//overshoots
     const val FAR_POWER=1400
+    val offset = 50.0// offset the function for more power
 
 
-    private val BASE_PIDF = PIDFCoefficients(190.0, 0.00000, 0.0000, 14.9) // Base feedforward at 12V
-
+    private val BASE_PIDF = PIDFCoefficients(190.0, 0.0, 0.0, 14.9) // Base feedforward at 12V
+    //default is 190, 14.9
     fun init(hardwareMap: HardwareMap) {
         motorShooterFirst = hardwareMap.get(DcMotorEx::class.java, "motorShooterFirst")
         motorShooterSecond = hardwareMap.get(DcMotorEx::class.java, "motorShooterSecond")
@@ -112,10 +113,11 @@ object Shooter {
     fun getPower(): Double {
         return motorShooterFirst.power
     }
+
     fun calculate(distance: Double): Double {
         val value = 10190.93 +
                 (1823.04 - 10190.93) /
-                (1 + (distance / 563.5116).pow(2.22067))
+                (1 + (distance / 563.5116).pow(2.22067))+ offset
 
         return MathFunctions.clamp(value, 0.0, MAX_RPM)
     }

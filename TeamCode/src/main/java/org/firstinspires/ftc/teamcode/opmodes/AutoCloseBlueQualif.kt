@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmodes
 
-import com.acmerobotics.roadrunner.TrajectoryActionBuilder
-import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import org.firstinspires.ftc.teamcode.enums.Colours
-import org.firstinspires.ftc.teamcode.subsystems.Hood
 import org.firstinspires.ftc.teamcode.subsystems.Intake
 import org.firstinspires.ftc.teamcode.subsystems.Joint
 import org.firstinspires.ftc.teamcode.subsystems.Shooter
@@ -16,7 +13,7 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
 
 @Autonomous
-class AutoCloseBlueClasifier : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Colours.BLUE) {
+class AutoCloseBlueQualif : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Colours.BLUE) {
 
     fun turnTo(degrees: Double) {
         val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))

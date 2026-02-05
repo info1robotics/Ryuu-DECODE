@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmodes
 
-import com.acmerobotics.roadrunner.TrajectoryActionBuilder
-import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import org.firstinspires.ftc.teamcode.enums.Colours
-import org.firstinspires.ftc.teamcode.subsystems.Hood
 import org.firstinspires.ftc.teamcode.subsystems.Intake
 import org.firstinspires.ftc.teamcode.subsystems.Joint
 import org.firstinspires.ftc.teamcode.subsystems.Shooter
@@ -16,7 +13,7 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
 
 @Autonomous
-class AutoCloseRedClasifier : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//32 cm from tile intersection
+class AutoCloseRedQualif : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//32 cm from tile intersection
 fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
     val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))
     follower.holdPoint(temp)
@@ -81,10 +78,10 @@ fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
             sleepms(700),
 
 
-            execute{ goTo(90.0,61.2,0.0)},//pre collect -2  open gate at y 61.2
+            execute{ goTo(90.0,61.8,0.0)},//pre collect -2  open gate at y 61.2
             preCollectSeq,
             sleepms(1000),
-            execute{ goTo(115.0,61.2,0.0)},//collectopen gate at x=119 y=61.2
+            execute{ goTo(115.0,61.8,0.0)},//collectopen gate at x=119 y=61.2
             sleepms(1000),
             afterCollectSeq,
             execute{Turret.setPosition(0.76)},

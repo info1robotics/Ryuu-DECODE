@@ -84,11 +84,14 @@ class TeleopSolo : LinearOpMode() {
                 Joint.setPosition(Joint.INIT_POSITION)
         }
     }
+    /*
     private fun handleInputJack()
     {
         if(gamepad1.dpad_up) Jack.setPosition(Jack.LOWER_LIMIT)
         if(gamepad1.dpad_down) Jack.setPosition(Jack.HIGHER_LIMIT)
     }
+
+     */
     var far = false
     var power = 0.0
     private fun handleInputShooter() {
@@ -109,7 +112,7 @@ class TeleopSolo : LinearOpMode() {
                 {
                     Intake.setPowerMain(1.0)
                     Intake.setPowerSupport(1.0)
-                    actionQueue.add(1100)
+                    actionQueue.add(900)
                     {
                         Intake.stop()
                         Shooter.setRPM(0.0)
@@ -185,7 +188,7 @@ class TeleopSolo : LinearOpMode() {
             handleInputIntake()
             handleInputShooter()
             handleInputTurret()
-            handleInputJack()
+            //handleInputJack()
 
             gamepadEx1.update()
             gamepadEx2.update()

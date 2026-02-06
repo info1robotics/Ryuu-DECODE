@@ -19,7 +19,7 @@ object Shooter {
     const val MAX_RPM = 3428.0//
     const val MAX_VELOCITY = 1700.0//overshoots
     const val FAR_POWER=1400
-    val offset = 35.0// offset the function for more power
+    val offset = 15.0// offset the function for more power
 
 
     private val BASE_PIDF = PIDFCoefficients(190.0, 0.0, 0.0, 14.9) // Base feedforward at 12V
@@ -123,6 +123,6 @@ object Shooter {
     }
     fun charge()
     {
-        setRPM(1840.0)
+        setRPM(1840.0+ offset)
     }
 }

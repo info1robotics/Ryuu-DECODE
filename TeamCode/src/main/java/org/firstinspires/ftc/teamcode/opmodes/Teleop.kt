@@ -88,6 +88,7 @@ class Teleop : LinearOpMode() {
             else
             {
                 Intake.setPowerMain(gamepad2.right_trigger.toDouble())
+
                 if(Intake.isFull())
                     Intake.setPowerSupport(0.0)
                 else if(!Intake.isEmptyTop())
@@ -95,6 +96,7 @@ class Teleop : LinearOpMode() {
                 else
                     Intake.setPowerSupport((gamepad2.right_trigger.toDouble())*(0.8))
             }
+
             if(gamepad2.right_bumper)
                 Joint.setPosition(Joint.COLLECT_POSITION+0.1)
             else if(gamepad2.right_trigger+gamepad2.left_trigger>0)
@@ -119,7 +121,7 @@ class Teleop : LinearOpMode() {
 
             far = false
             Hood.setPosition(Hood.calculate(distance))
-            if(gamepadEx2.getButtonDown("a"))
+            if(gamepadEx1.getButtonDown("a"))
             {
                 Wicket.setPosition(Wicket.OPEN_POSITION)
                 transition=true
@@ -127,7 +129,7 @@ class Teleop : LinearOpMode() {
                     {
                         Intake.setPowerMain(1.0)
                         Intake.setPowerSupport(1.0)
-                        actionQueue.add(1100)
+                        actionQueue.add(900)
                         {
                             Intake.stop()
                             Shooter.setRPM(0.0)
@@ -146,8 +148,8 @@ class Teleop : LinearOpMode() {
     var hold = false
     private fun handleInputTurret() {
 
-        if(gamepadEx1.getButtonDown("a") && !hold) hold=true
-        else if(gamepadEx1.getButtonDown("a") && hold) hold=false
+        if(gamepadEx2.getButtonDown("y") && !hold) hold=true
+        else if(gamepadEx2.getButtonDown("y") && hold) hold=false
 
         if(!hold && distance < max)
         {

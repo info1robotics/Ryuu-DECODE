@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.ServoImplEx
 
 object Joint {
 
-    var COLLECT_POSITION = 0.65
-    var INIT_POSITION = 0.46
+    var COLLECT_POSITION = 0.584
+    var INIT_POSITION = 0.43
 
     private lateinit var servoJointLeft: ServoImplEx
     private lateinit var servoJointRight: ServoImplEx

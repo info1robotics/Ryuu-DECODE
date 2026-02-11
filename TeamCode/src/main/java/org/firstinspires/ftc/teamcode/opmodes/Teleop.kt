@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepuntil
 import kotlin.math.absoluteValue
 
-@TeleOp
+@TeleOp(name = "@Teleop")
 class Teleop : LinearOpMode() {
 
     fun Gamepad.corrected_left_stick_y(): Float = -this.left_stick_y
@@ -211,8 +211,8 @@ class Teleop : LinearOpMode() {
                 allianceColour = Colours.RED
                //Limelight.allianceTag = AprilTags.RED
                 follower.pose = Pose(//TODO change to autopos
-                    98.0,
-                    70.0,
+                    85.0,
+                    83.0,
                     Math.toRadians(0.0)
                 )
                 wasSelected = true
@@ -221,8 +221,8 @@ class Teleop : LinearOpMode() {
                 allianceColour = Colours.BLUE//TODO change to autopos
                 //Limelight.allianceTag = AprilTags.BLUE
                 follower.pose = Pose(
-                    45.0,
-                    60.0,
+                    56.0,
+                    79.0,
                     Math.toRadians(160.0)
                 )
                 wasSelected = true

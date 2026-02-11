@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.hardware.ServoImplEx
 
 object Jack {
 
-    var offset = 0.02
+    var offset = -0.02
     var INIT_POSITION = 0.91
     var HIGHER_LIMIT = 0.91
-    var LOWER_LIMIT = 0.55
+    var LOWER_LIMIT = 0.6
     var STEP = 0.05
     private lateinit var servoJackFirst: ServoImplEx
     private lateinit var servoJackSecond: ServoImplEx

@@ -8,9 +8,10 @@ import com.qualcomm.robotcore.hardware.ServoImplEx
 object Wicket {
 
     var OPEN_POSITION = 0.48
-    var CLOSE_POSITION = 0.74
+    var CLOSE_POSITION = 0.76
 
     private lateinit var servoWicket: ServoImplEx
+
 
     fun init(hardwareMap: HardwareMap) {
         servoWicket = hardwareMap.get(ServoImplEx::class.java, "servoWicket")

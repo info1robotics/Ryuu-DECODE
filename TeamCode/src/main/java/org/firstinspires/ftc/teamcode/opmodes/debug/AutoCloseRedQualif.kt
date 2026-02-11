@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode.opmodes
+package org.firstinspires.ftc.teamcode.opmodes.debug
 
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.enums.Colours
+import org.firstinspires.ftc.teamcode.opmodes.AutoBase
 import org.firstinspires.ftc.teamcode.subsystems.Intake
 import org.firstinspires.ftc.teamcode.subsystems.Joint
 import org.firstinspires.ftc.teamcode.subsystems.Shooter
@@ -11,7 +13,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Wicket
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.execute
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
-
+@Disabled
 @Autonomous
 class AutoCloseRedQualif : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {//32 cm from tile intersection
 fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
@@ -41,8 +43,7 @@ fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
                     actionQueue.add(400)
                     {
                         Shooter.setRPM(power)
-
-                        actionQueue.add(800)
+                        actionQueue.add(600)
                         {
                             Shooter.setRPM(0.0)
                             Wicket.setPosition(Wicket.CLOSE_POSITION)
@@ -100,7 +101,7 @@ fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
             execute{ goTo(122.6,61.5,0.0)},//collect -3
             sleepms(700),
             preCollectSeq,
-            execute{ goTo(126.0,57.0,18.0)},//push gate
+            execute{ goTo(124.0,57.0,20.0)},//push gate
             sleepms(1500),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},
@@ -122,6 +123,7 @@ fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
             sleepms(1500),
             shootSeq,
 
+
             sleepms(700),
             execute{ Joint.setPosition(Joint.COLLECT_POSITION) },
             execute{ goTo(103.0,61.5,0.0)},//
@@ -129,7 +131,7 @@ fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
             execute{ goTo(122.6,61.5,0.0)},//collect -5
             sleepms(700),
             preCollectSeq,
-            execute{ goTo(126.0,57.0,18.0)},//push gate
+            execute{ goTo(124.0,57.0,20.0)},//push gate
             sleepms(1500),//wait at gate
             execute{Shooter.charge()},
             execute{ goTo(85.0,83.0,0.0)},
@@ -137,6 +139,8 @@ fun turnTo(degrees: Double) { // if you want to turn right, use negative degrees
             execute{Joint.setPosition(Joint.COLLECT_POSITION+0.1)},
             sleepms(800),
             shootSeq,
+
+
 
             sleepms(700),
             execute { goTo(95.0, 35.0, 0.0) }, // last spike mark -6

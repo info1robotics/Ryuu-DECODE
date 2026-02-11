@@ -19,7 +19,7 @@ object Controller {
         Hood.init(hardwareMap)
         //Limelight.init(hardwareMap,0)
         Joint.init(hardwareMap)
-        //Jack.init(hardwareMap)
+        Jack.init(hardwareMap)
         Wicket.init(hardwareMap)
         state = State.INIT
     }

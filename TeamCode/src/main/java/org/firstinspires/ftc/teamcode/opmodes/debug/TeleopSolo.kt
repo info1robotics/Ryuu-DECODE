@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.subsystems.extra.Limelight
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepuntil
 import kotlin.math.absoluteValue
 
-@TeleOp
+@TeleOp(name = "@TeleopSolo")
 class TeleopSolo : LinearOpMode() {
 
     fun Gamepad.corrected_left_stick_y(): Float = -this.left_stick_y
@@ -71,7 +71,12 @@ class TeleopSolo : LinearOpMode() {
             if(gamepad1.right_bumper)
             {
                 Intake.setPowerMain(1.0)
-                Intake.setPowerSupport(0.7)
+                if(Intake.isFull())
+                    Intake.setPowerSupport(0.0)
+                else if(!Intake.isEmptyTop())
+                    Intake.setPowerSupport(0.2)
+                else
+                    Intake.setPowerSupport(0.8)
             }
             else
             {
@@ -84,14 +89,12 @@ class TeleopSolo : LinearOpMode() {
                 Joint.setPosition(Joint.INIT_POSITION)
         }
     }
-    /*
+
     private fun handleInputJack()
     {
         if(gamepad1.dpad_up) Jack.setPosition(Jack.LOWER_LIMIT)
         if(gamepad1.dpad_down) Jack.setPosition(Jack.HIGHER_LIMIT)
     }
-
-     */
     var far = false
     var power = 0.0
     private fun handleInputShooter() {
@@ -188,7 +191,7 @@ class TeleopSolo : LinearOpMode() {
             handleInputIntake()
             handleInputShooter()
             handleInputTurret()
-            //handleInputJack()
+            handleInputJack()
 
             gamepadEx1.update()
             gamepadEx2.update()

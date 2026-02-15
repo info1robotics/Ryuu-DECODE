@@ -156,14 +156,14 @@ class Teleop : LinearOpMode() {
             if(allianceColour==Colours.BLUE)
             {
                 if(Math.toDegrees(follower.pose.heading)<180 && Math.toDegrees(follower.pose.heading)>60)//previously 96 -60
-                    Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+                    Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour,0.0)
                 else
                     Turret.setPosition(Turret.FORWARD_POSITION)
             }
             else
             {
                 if(Math.toDegrees(follower.pose.heading)<96 && Math.toDegrees(follower.pose.heading)>-60)//previously 96 -60
-                    Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+                    Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour,0.0)
                 else
                     Turret.setPosition(Turret.FORWARD_POSITION)
             }

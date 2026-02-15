@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes
 
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.enums.Colours
 import org.firstinspires.ftc.teamcode.subsystems.Intake
 import org.firstinspires.ftc.teamcode.subsystems.Joint
@@ -11,9 +12,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Wicket
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.execute
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.sleepms
-
+@Disabled
 @Autonomous
-class AutoCloseBluePlayoff : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Colours.BLUE) {
+class AutoCloseBluePlayoff : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Colours.BLUE,-0.03) {
 
     fun turnTo(degrees: Double) {
         val temp = Pose(follower.pose.x, follower.pose.y, Math.toRadians(degrees))

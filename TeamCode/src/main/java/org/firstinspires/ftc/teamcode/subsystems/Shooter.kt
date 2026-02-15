@@ -127,5 +127,9 @@ object Shooter {
     {
         setRPM(power.coerceIn(0.0, SUPER_CYCLE_POWER))
     }
+    fun charge()
+    {
+        setRPM(3000.0 + offset)
+    }
 
 }

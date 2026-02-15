@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.tasks.TaskBuilder.serial
 import org.openftc.easyopencv.OpenCvCamera
 import org.openftc.easyopencv.OpenCvPipeline
 
-abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadians(0.0)),private val allianceColour:Colours) : LinearOpMode() {
+abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadians(0.0)),private val allianceColour:Colours, private val turretOffset:Double) : LinearOpMode() {
 
     var far = false//play far or near
     lateinit var gamepadEx1: GamepadEx
@@ -42,6 +42,9 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
     var deg = 0.0
     var power = 0.0
     var full = true
+
+    var rawHeading = 0.0
+    var correctedHeading =0.0
 
 @CallSuper
     open fun onInit() {
@@ -85,7 +88,7 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
     }
 
     fun onStartTick() {
-        //turretLock()
+        turretLock()
         distance = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
         power = Shooter.calculate(distance)
         deg = Hood.calculate(distance)
@@ -124,6 +127,12 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
 
         while (opModeIsActive() && !isStopRequested) {
 
+            rawHeading = follower.pose.heading
+            correctedHeading = if(rawHeading < 0)
+                Math.PI + (rawHeading + Math.PI )
+            else
+                rawHeading
+
             onStartTick()
             log.tick()
             actionQueue.update()
@@ -145,9 +154,19 @@ abstract class AutoBase(private val startPose: Pose = Pose(0.0, 0.0, Math.toRadi
     }
     fun turretLock()
     {
-        if(Math.toDegrees(follower.pose.heading)<96 && Math.toDegrees(follower.pose.heading)>-60)//previously -35
-            Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+        if(allianceColour==Colours.BLUE)
+        {
+            if(Math.toDegrees(correctedHeading)<230 && Math.toDegrees(correctedHeading)>60)//previously 96 -60
+                Turret.lockToTarget(follower.pose.x,follower.pose.y,correctedHeading,allianceColour,0.0)
+            else
+                Turret.setPosition(Turret.FORWARD_POSITION)
+        }
         else
-            Turret.setPosition(Turret.FORWARD_POSITION)
+        {
+            if(Math.toDegrees(rawHeading)<96 && Math.toDegrees(rawHeading)>-60)//previously 96 -60
+                Turret.lockToTarget(follower.pose.x,follower.pose.y,rawHeading,allianceColour,0.0)
+            else
+                Turret.setPosition(Turret.FORWARD_POSITION)
+        }
     }
 }

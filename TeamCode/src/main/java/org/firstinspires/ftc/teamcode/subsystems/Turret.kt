@@ -11,7 +11,6 @@ import kotlin.math.atan2
 
 object Turret {
 
-    var offset = 0.0
     var HIGHER_LIMIT = 1.0//85 turning right
     var LOWER_LIMIT = 0.0//85 turing left
     var FORWARD_POSITION = 0.5//0 degrees
@@ -56,7 +55,8 @@ object Turret {
         robotX: Double,
         robotY: Double,
         robotHeading: Double,
-        allianceColour: Colours
+        allianceColour: Colours,
+        offset:Double
     ) {
 
         // ✅ use real field goal positions

@@ -44,6 +44,8 @@ class TeleopSolo : LinearOpMode() {
     private var distancePP = 0.0//distance got from odo
     private var distance = 0.0
     private var max = 205
+    private var correctedHeading = 0.0
+    private  var rawHeading = 0.0
 
     var forwardPower =0.0
     var strafePower = 0.0
@@ -136,7 +138,6 @@ class TeleopSolo : LinearOpMode() {
 
     }
     var hold = false
-    var headingCorrector = 0.0
     private fun handleInputTurret() {
 
         if(gamepadEx1.getButtonDown("y") && !hold) hold=true
@@ -146,15 +147,15 @@ class TeleopSolo : LinearOpMode() {
         {
             if(allianceColour==Colours.BLUE)
             {
-                if(Math.toDegrees(follower.pose.heading)<180 && Math.toDegrees(follower.pose.heading)>60)//previously 96 -60
-                    Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+                if(Math.toDegrees(correctedHeading)<230 && Math.toDegrees(correctedHeading)>60)//previously 96 -60
+                    Turret.lockToTarget(follower.pose.x,follower.pose.y,correctedHeading,allianceColour,0.0)
                 else
                     Turret.setPosition(Turret.FORWARD_POSITION)
             }
             else
             {
-                if(Math.toDegrees(follower.pose.heading)<96 && Math.toDegrees(follower.pose.heading)>-60)//previously 96 -60
-                    Turret.lockToTarget(follower.pose.x,follower.pose.y,follower.pose.heading,allianceColour)
+                if(Math.toDegrees(rawHeading)<96 && Math.toDegrees(rawHeading)>-60)//previously 96 -60
+                    Turret.lockToTarget(follower.pose.x,follower.pose.y,rawHeading,allianceColour,0.0)
                 else
                     Turret.setPosition(Turret.FORWARD_POSITION)
             }
@@ -225,7 +226,11 @@ class TeleopSolo : LinearOpMode() {
             else if(distance <200) 300
             else 600
 
-
+            rawHeading = follower.pose.heading
+            correctedHeading = if(rawHeading < 0)
+                Math.PI + (rawHeading + Math.PI )
+            else
+                rawHeading
             //var ta = Limelight.getTa()
             //var distanceLL = ta?.let { Limelight.getDistanceToAprilTag(it) }
             distancePP = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
@@ -240,8 +245,9 @@ class TeleopSolo : LinearOpMode() {
             //log.add("rgb",Intake.getColorReading())
             log.add("@X", follower.pose.x)
             log.add("@Y", follower.pose.y)
-            log.add("@Heading", Math.toDegrees(follower.pose.heading))
-            log.add("raw heading",follower.pose.heading)
+            log.add("@Heading", Math.toDegrees(rawHeading))
+            log.add("raw heading",rawHeading)
+            log.add("corrected heading",correctedHeading)
             log.add("distance from $allianceColour goal: $distancePP")
             log.add(("far "+(far).toString()))
             log.tick()

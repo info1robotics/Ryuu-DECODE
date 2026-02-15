@@ -71,7 +71,7 @@ class AutoCloseBluePlayoff : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),C
 
         task = serial(
             execute { goTo(56.0, 93.0, 138.0) }, // preload-1 (144-88)
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             execute { Intake.setPowerMain(0.7) },
             sleepms(1500),
             shootSeq,
@@ -84,7 +84,7 @@ class AutoCloseBluePlayoff : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),C
             sleepms(1000),
             execute { Turret.setPosition(0.22) },
             afterCollectSeq,
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             sleepms(300),
             execute { goTo(59.0, 79.0, 180.0) },
             sleepms(1300),
@@ -99,7 +99,7 @@ class AutoCloseBluePlayoff : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),C
             sleepms(700),
             execute { goTo(10.8, 56.0, 140.0) }, // push gate
             sleepms(1200),
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             execute { goTo(59.0, 79.0, 180.0) },
             sleepms(300),
             execute { Joint.setPosition(Joint.COLLECT_POSITION + 0.1) },
@@ -115,7 +115,7 @@ class AutoCloseBluePlayoff : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),C
             sleepms(700),
             execute { goTo(9.8, 56.0, 140.0) }, // push gate
             sleepms(1300),
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             execute { goTo(59.0, 79.0, 180.0) },
             sleepms(750),
             execute { Joint.setPosition(Joint.COLLECT_POSITION + 0.1) },
@@ -132,7 +132,7 @@ class AutoCloseBluePlayoff : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),C
             execute { goTo(16.0, 67.6, 198.0) }, // push hearts
             sleepms(800),
             afterCollectSeq,
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             execute { goTo(59.0, 79.0, 180.0) },
             sleepms(1500),
             shootSeq,
@@ -146,7 +146,7 @@ class AutoCloseBluePlayoff : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),C
             sleepms(700),
             execute { goTo(9.8, 56.0, 140.0) }, // push gate
             sleepms(1400),
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             execute { goTo(59.0, 79.0, 180.0) },
             sleepms(300),
             execute { Joint.setPosition(Joint.COLLECT_POSITION + 0.1) },

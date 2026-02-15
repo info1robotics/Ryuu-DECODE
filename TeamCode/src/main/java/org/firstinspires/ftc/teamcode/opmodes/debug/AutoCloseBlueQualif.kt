@@ -72,7 +72,7 @@ class AutoCloseBlueQualif : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Co
 
         task = serial(
             execute { goTo(56.0, 93.0, 138.0) }, // preload-1 (144-88)
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             execute { Intake.setPowerMain(0.7) },
             sleepms(1500),
             shootSeq,
@@ -85,7 +85,7 @@ class AutoCloseBlueQualif : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Co
             sleepms(1000),
             execute { Turret.setPosition(0.22) },
             afterCollectSeq,
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             sleepms(300),
             execute { goTo(59.0, 79.0, 180.0) },
             sleepms(1500),
@@ -100,7 +100,7 @@ class AutoCloseBlueQualif : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Co
             sleepms(700),
             execute { goTo(10.3, 56.0, 150.0) }, // push gate
             sleepms(1500),
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             execute { goTo(59.0, 79.0, 180.0) },
             sleepms(850),
             execute { Joint.setPosition(Joint.COLLECT_POSITION + 0.1) },
@@ -117,7 +117,7 @@ class AutoCloseBlueQualif : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Co
             execute { goTo(25.0, 80.6, 180.0) }, // collect
             sleepms(750),
             afterCollectSeq,
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             execute { goTo(59.0, 79.0, 180.0) },
             sleepms(1500),
             shootSeq,
@@ -131,7 +131,7 @@ class AutoCloseBlueQualif : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Co
             sleepms(700),
             execute { goTo(10.3, 56.0, 150.0) }, // push gate
             sleepms(1500),
-            execute { Shooter.charge() },
+            execute { Shooter.charge(power) },
             execute { goTo(59.0, 79.0, 180.0) },
             sleepms(850),
             execute { Joint.setPosition(Joint.COLLECT_POSITION + 0.1) },
@@ -148,7 +148,7 @@ class AutoCloseBlueQualif : AutoBase(Pose(24.0, 123.0, Math.toRadians(138.0)),Co
             execute { goTo(59.0, 79.0, 180.0) },
             sleepms(1100),
             afterCollectSeq,
-            execute{Shooter.charge()},
+            execute{Shooter.charge(power)},
             execute{Joint.setPosition(Joint.COLLECT_POSITION)},
             sleepms(1000),
             shootSeq,

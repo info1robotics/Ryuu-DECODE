@@ -69,7 +69,7 @@ class AutoDebugRed : AutoBase(Pose(120.0,123.0, 32.0),Colours.RED) {
 
         task = serial(
             execute{ goTo(88.0,93.0,45.0)},//preload-1
-            execute{Shooter.charge()},
+            execute{Shooter.charge(power)},
             execute{Intake.setPowerMain(0.7)},
             sleepms(1300),
             shootSeq,

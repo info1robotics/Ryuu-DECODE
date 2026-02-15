@@ -43,7 +43,7 @@ class Teleop : LinearOpMode() {
     private var distanceLL = 0.0//distance got from limelight
     private var distancePP = 0.0//distance got from odo
     private var distance = 0.0
-    private var max = 225
+    private var max = 205
 
     var forwardPower =0.0
     var strafePower = 0.0
@@ -117,7 +117,7 @@ class Teleop : LinearOpMode() {
         if(distance<max)
         {
             if(!transition && Intake.isFull())
-                Shooter.charge()
+                Shooter.charge(power)
 
             far = false
             Hood.setPosition(Hood.calculate(distance))
@@ -129,7 +129,7 @@ class Teleop : LinearOpMode() {
                     {
                         Intake.setPowerMain(1.0)
                         Intake.setPowerSupport(1.0)
-                        actionQueue.add(900)
+                        actionQueue.add(700)
                         {
                             Intake.stop()
                             Shooter.setRPM(0.0)
@@ -249,10 +249,9 @@ class Teleop : LinearOpMode() {
             distancePP = Pinpoint.distance(follower.pose.x,follower.pose.y, allianceColour)
             distance = distancePP//change distance method
 
-            delay = if(distance<=108) 200
-            else if(distance>108 && distance<166) 400
-            else if(distance>166 && distance<190) 700
-            else 1100
+            delay = if(distance<=175) 0
+            else if(distance <200) 300
+            else 600
 
             log.add("choose alliance colour RED/BLUE by dpad left/right",allianceColour.toString())
             //Limelight.getTx()?.let { log.add("tx", it) }

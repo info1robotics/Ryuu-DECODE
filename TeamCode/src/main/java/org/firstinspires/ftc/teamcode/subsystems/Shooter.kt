@@ -16,10 +16,11 @@ object Shooter {
     private lateinit var voltageSensor: VoltageSensor
 
     private const val MOTOR_TICKS_PER_REV = 28
-    const val MAX_RPM = 3428.0//
+    const val MAX_RPM = 3600.0//
     const val MAX_VELOCITY = 1700.0//overshoots
     const val FAR_POWER=1400
-    val offset = 15.0// offset the function for more power
+    const val SUPER_CYCLE_POWER = 3175.0
+    val offset = 100.0// offset the function for more power
 
 
     private val BASE_PIDF = PIDFCoefficients(190.0, 0.0, 0.0, 14.9) // Base feedforward at 12V
@@ -115,14 +116,16 @@ object Shooter {
     }
 
     fun calculate(distance: Double): Double {
-        val value = 10190.93 +
-                (1823.04 - 10190.93) /
-                (1 + (distance / 563.5116).pow(2.22067)) + offset
+        val value = 465451200 +
+                (2481.977 - 465451200) /
+                (1 + (distance / 43103.35).pow(2.41399)) + offset
 
         return MathFunctions.clamp(value, 0.0, MAX_RPM)
     }
-    fun charge()
+
+    fun charge(power:Double)
     {
-        setRPM(1840.0+ offset)
+        setRPM(power.coerceIn(0.0, SUPER_CYCLE_POWER))
     }
+
 }
